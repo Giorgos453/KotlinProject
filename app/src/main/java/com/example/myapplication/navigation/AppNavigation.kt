@@ -11,6 +11,8 @@ import com.example.myapplication.ui.dashboard.DashboardScreen
 import com.example.myapplication.ui.home.HomeScreen
 import com.example.myapplication.ui.location.LocationScreen
 import com.example.myapplication.ui.location.LocationViewModel
+import com.example.myapplication.ui.map.MapScreen
+import com.example.myapplication.ui.map.MapViewModel
 
 sealed class Screen(val route: String) {
     data object Home : Screen("home")
@@ -18,12 +20,14 @@ sealed class Screen(val route: String) {
         fun createRoute(userName: String) = "dashboard/$userName"
     }
     data object Location : Screen("location")
+    data object Map : Screen("map")
 }
 
 @Composable
 fun AppNavHost(
     navController: NavHostController,
-    locationViewModelFactory: LocationViewModel.Factory
+    locationViewModelFactory: LocationViewModel.Factory,
+    mapViewModelFactory: MapViewModel.Factory
 ) {
     NavHost(
         navController = navController,
@@ -36,6 +40,9 @@ fun AppNavHost(
                 },
                 onNavigateToLocation = {
                     navController.navigate(Screen.Location.route)
+                },
+                onNavigateToMap = {
+                    navController.navigate(Screen.Map.route)
                 }
             )
         }
@@ -55,6 +62,14 @@ fun AppNavHost(
             val locationViewModel: LocationViewModel = viewModel(factory = locationViewModelFactory)
             LocationScreen(
                 viewModel = locationViewModel,
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+
+        composable(Screen.Map.route) {
+            val mapViewModel: MapViewModel = viewModel(factory = mapViewModelFactory)
+            MapScreen(
+                viewModel = mapViewModel,
                 onNavigateBack = { navController.popBackStack() }
             )
         }

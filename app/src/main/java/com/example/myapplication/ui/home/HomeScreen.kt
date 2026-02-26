@@ -24,7 +24,8 @@ import com.example.myapplication.util.AppLogger
 @Composable
 fun HomeScreen(
     onNavigateToDashboard: (String) -> Unit,
-    onNavigateToLocation: () -> Unit
+    onNavigateToLocation: () -> Unit,
+    onNavigateToMap: () -> Unit = {}
 ) {
     var userName by rememberSaveable { mutableStateOf("") }
 
@@ -71,6 +72,18 @@ fun HomeScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("View Location")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(
+            onClick = {
+                AppLogger.d(TAG, "Navigating to map screen")
+                onNavigateToMap()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Campus Map")
         }
     }
 }
