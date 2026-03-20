@@ -1,12 +1,21 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.data.geocoding.GeocodingRepository
@@ -28,26 +37,69 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         AppLogger.i(TAG, "onCreate")
 
-        // MapLibre must be initialized before any MapView is created.
-        // No API key needed — we use a free Carto OSM style.
+        // MapLibre muss vor der Erstellung einer MapView initialisiert werden.
         MapLibre.getInstance(this)
 
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val locationRepository = LocationRepository(fusedLocationClient)
-        locationViewModelFactory = LocationViewModel.Factory(locationRepository)
+        // Context wird an die Factory übergeben, damit das ViewModel CSV-Dateien schreiben kann
+        locationViewModelFactory = LocationViewModel.Factory(locationRepository, applicationContext)
 
         val geocodingRepository = GeocodingRepository(this)
         mapViewModelFactory = MapViewModel.Factory(locationRepository, geocodingRepository)
+
+        // Prüfe, ob eine Benutzer-ID in SharedPreferences vorhanden ist
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val savedUserId = prefs.getString(KEY_USER_ID, null)
+        val shouldShowDialog = savedUserId.isNullOrBlank()
 
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
                 val navController = rememberNavController()
+
+                // State für den AlertDialog zur Benutzer-ID-Eingabe
+                var showUserIdDialog by remember { mutableStateOf(shouldShowDialog) }
+                var userIdInput by remember { mutableStateOf("") }
+
+                // AlertDialog anzeigen, falls keine Benutzer-ID gespeichert ist
+                if (showUserIdDialog) {
+                    AlertDialog(
+                        onDismissRequest = { /* Dialog kann nicht geschlossen werden ohne Eingabe */ },
+                        title = { Text("User Identifier") },
+                        text = {
+                            OutlinedTextField(
+                                value = userIdInput,
+                                onValueChange = { userIdInput = it },
+                                label = { Text("Enter your User ID") },
+                                singleLine = true
+                            )
+                        },
+                        confirmButton = {
+                            TextButton(
+                                onClick = {
+                                    if (userIdInput.isNotBlank()) {
+                                        // Benutzer-ID in SharedPreferences speichern
+                                        prefs.edit()
+                                            .putString(KEY_USER_ID, userIdInput.trim())
+                                            .apply()
+                                        AppLogger.i(TAG, "User ID saved: ${userIdInput.trim()}")
+                                        showUserIdDialog = false
+                                    }
+                                }
+                            ) {
+                                Text("Save")
+                            }
+                        }
+                    )
+                }
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     AppNavHost(
                         navController = navController,
                         locationViewModelFactory = locationViewModelFactory,
-                        mapViewModelFactory = mapViewModelFactory
+                        mapViewModelFactory = mapViewModelFactory,
+                        modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
@@ -81,5 +133,7 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         private const val TAG = "MainActivity"
+        private const val PREFS_NAME = "app_prefs"
+        private const val KEY_USER_ID = "user_id"
     }
 }

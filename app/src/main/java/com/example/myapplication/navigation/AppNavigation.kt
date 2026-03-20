@@ -1,6 +1,7 @@
 package com.example.myapplication.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -27,11 +28,13 @@ sealed class Screen(val route: String) {
 fun AppNavHost(
     navController: NavHostController,
     locationViewModelFactory: LocationViewModel.Factory,
-    mapViewModelFactory: MapViewModel.Factory
+    mapViewModelFactory: MapViewModel.Factory,
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Home.route,
+        modifier = modifier
     ) {
         composable(Screen.Home.route) {
             HomeScreen(

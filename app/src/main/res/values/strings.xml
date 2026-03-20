@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="csv_viewer_title">GPS Coordinates Log</string>
+    <string name="third_activity_title">Third Activity</string>
+    <string name="third_activity_info">This activity demonstrates Activity management with finish(). Navigating to another activity or pressing Back will close this activity.</string>
+    <string name="go_to_csv_viewer">Go to CSV Viewer</string>
+    <string name="back">Back</string>
+    <string name="no_data_available">No GPS data recorded yet.\nGo to Location screen, enable recording, and fetch a location.</string>
+    <string name="error_reading_csv">Error reading CSV: %1$s</string>
+    <string name="location_text">Lat: %1$.4f, Lon: %2$.4f</string>
 </resources>
