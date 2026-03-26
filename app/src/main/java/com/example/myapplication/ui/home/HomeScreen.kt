@@ -19,15 +19,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.myapplication.util.AppLogger
 
 @Composable
 fun HomeScreen(
-    onNavigateToDashboard: (String) -> Unit,
-    onNavigateToLocation: () -> Unit,
-    onNavigateToMap: () -> Unit = {}
+    userName: String,
+    onNameSaved: (String) -> Unit
 ) {
-    var userName by rememberSaveable { mutableStateOf("") }
+    var nameInput by rememberSaveable { mutableStateOf(userName) }
 
     Column(
         modifier = Modifier
@@ -44,8 +42,8 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(
-            value = userName,
-            onValueChange = { userName = it },
+            value = nameInput,
+            onValueChange = { nameInput = it },
             label = { Text("Enter your name") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -53,40 +51,10 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {
-                AppLogger.d(TAG, "Navigating to dashboard with name: $userName")
-                onNavigateToDashboard(userName.ifBlank { "User" })
-            },
+            onClick = { onNameSaved(nameInput.ifBlank { "User" }) },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Go to Dashboard")
+            Text("Save Name")
         }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Button(
-            onClick = {
-                AppLogger.d(TAG, "Navigating to location screen")
-                onNavigateToLocation()
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("View Location")
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Button(
-            onClick = {
-                AppLogger.d(TAG, "Navigating to map screen")
-                onNavigateToMap()
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Campus Map")
-        }
-
     }
 }
-
-private const val TAG = "HomeScreen"

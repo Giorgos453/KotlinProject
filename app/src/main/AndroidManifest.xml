@@ -31,12 +31,17 @@
             android:name=".SecondActivity"
             android:exported="false"
             android:label="@string/csv_viewer_title"
-            android:theme="@style/Theme.MyApplication" />
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
         <activity
             android:name=".ThirdActivity"
             android:exported="false"
-            android:label="@string/third_activity_title"
-            android:theme="@style/Theme.MyApplication" />
+            android:label="@string/detail_title"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
+        <activity
+            android:name=".ui.settings.SettingsActivity"
+            android:exported="false"
+            android:label="@string/settings_title"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
     </application>
 
 </manifest>

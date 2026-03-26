@@ -71,8 +71,7 @@ private fun vectorToBitmap(context: Context, @DrawableRes resId: Int): Bitmap {
 
 @Composable
 fun MapScreen(
-    viewModel: MapViewModel,
-    onNavigateBack: () -> Unit
+    viewModel: MapViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -222,15 +221,6 @@ fun MapScreen(
                     .zoom(MAP_ZOOM)
                     .build()
             }
-        }
-
-        TextButton(
-            onClick = onNavigateBack,
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(top = 48.dp, start = 8.dp)
-        ) {
-            Text("< Back", color = MaterialTheme.colorScheme.onSurface)
         }
 
         if (uiState.isLoading) {

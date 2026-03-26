@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Profil-Einstellungen -->
+    <PreferenceCategory
+        app:key="category_profile"
+        app:title="@string/pref_category_profile">
+
+        <EditTextPreference
+            app:key="user_id"
+            app:title="@string/pref_user_name_title"
+            app:summary="@string/pref_user_name_summary"
+            app:defaultValue="User"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <!-- Location-Einstellungen -->
+    <PreferenceCategory
+        app:key="category_location"
+        app:title="@string/pref_category_location">
+
+        <SwitchPreferenceCompat
+            app:key="location_recording_enabled"
+            app:title="@string/pref_location_recording_title"
+            app:summary="@string/pref_location_recording_summary"
+            app:defaultValue="false" />
+
+        <ListPreference
+            app:key="location_update_interval"
+            app:title="@string/pref_location_interval_title"
+            app:summary="@string/pref_location_interval_summary"
+            app:entries="@array/location_interval_entries"
+            app:entryValues="@array/location_interval_values"
+            app:defaultValue="5000"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <!-- Map-Einstellungen -->
+    <PreferenceCategory
+        app:key="category_map"
+        app:title="@string/pref_category_map">
+
+        <ListPreference
+            app:key="map_default_zoom"
+            app:title="@string/pref_map_zoom_title"
+            app:summary="@string/pref_map_zoom_summary"
+            app:entries="@array/map_zoom_entries"
+            app:entryValues="@array/map_zoom_values"
+            app:defaultValue="15.0"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <!-- Darstellung -->
+    <PreferenceCategory
+        app:key="category_appearance"
+        app:title="@string/pref_category_appearance">
+
+        <ListPreference
+            app:key="theme_mode"
+            app:title="@string/pref_theme_title"
+            app:summary="@string/pref_theme_summary"
+            app:entries="@array/theme_entries"
+            app:entryValues="@array/theme_values"
+            app:defaultValue="system"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="dynamic_colors"
+            app:title="@string/pref_dynamic_colors_title"
+            app:summary="@string/pref_dynamic_colors_summary"
+            app:defaultValue="false" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

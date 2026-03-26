@@ -1,60 +1,143 @@
 package com.example.myapplication
 
 import android.os.Bundle
-import android.widget.Button
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
-import android.app.Activity
-import com.example.myapplication.ui.location.LocationViewModel
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.ui.csv.CsvUiState
+import com.example.myapplication.ui.csv.CsvViewModel
+import com.example.myapplication.ui.csv.GpsCoordinateAdapter
 import com.example.myapplication.util.AppLogger
-import java.io.File
+import com.google.android.material.appbar.MaterialToolbar
+import kotlinx.coroutines.launch
 
 /**
- * SecondActivity: Liest den Inhalt der CSV-Datei (gps_coordinates.csv)
- * und zeigt ihn in einer TextView an.
- * Nutzt useLines für sicheres Ressourcenmanagement.
+ * SecondActivity: Zeigt GPS-Koordinaten aus der CSV-Datei als RecyclerView-Liste an.
+ *
+ * Refactored von einer einfachen TextView-Anzeige zu MVVM-Architektur:
+ * - CsvFileRepository: Datei-Lesezugriff (auf IO-Thread)
+ * - CsvViewModel: Hält UI-State (überlebt Rotation)
+ * - GpsCoordinateAdapter: RecyclerView-Adapter mit DiffUtil
+ *
+ * Die ursprüngliche Funktion (CSV-Daten anzeigen) bleibt erhalten,
+ * aber mit strukturierter Liste statt Fließtext.
  */
-class SecondActivity : Activity() {
+class SecondActivity : AppCompatActivity() {
+
+    private lateinit var viewModel: CsvViewModel
+
+    // UI-Referenzen
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var tvEmpty: TextView
+    private lateinit var tvError: TextView
+    private lateinit var adapter: GpsCoordinateAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
         AppLogger.i(TAG, "onCreate")
 
-        val tvCsvContent = findViewById<TextView>(R.id.tvCsvContent)
-        val btnBack = findViewById<Button>(R.id.btnBack)
+        // ViewModel über Factory erstellen (Repository-Dependency)
+        viewModel = ViewModelProvider(
+            this,
+            CsvViewModel.Factory(applicationContext)
+        )[CsvViewModel::class.java]
 
-        // CSV-Datei auslesen und in der TextView anzeigen
-        loadCsvContent(tvCsvContent)
+        setupToolbar()
+        setupViews()
+        setupRecyclerView()
+        observeUiState()
+    }
 
-        // Zurück-Button: Activity schließen
-        btnBack.setOnClickListener {
-            AppLogger.d(TAG, "Back button pressed")
+    /** Toolbar mit Zurück-Navigation konfigurieren */
+    private fun setupToolbar() {
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar.setNavigationOnClickListener {
+            AppLogger.d(TAG, "Back navigation pressed")
             finish()
         }
     }
 
-    /**
-     * Liest die CSV-Datei zeilenweise mit useLines (sicheres Ressourcenmanagement)
-     * und zeigt den Inhalt in der übergebenen TextView an.
-     */
-    private fun loadCsvContent(textView: TextView) {
-        try {
-            val csvFile = File(filesDir, LocationViewModel.CSV_FILE_NAME)
-            if (csvFile.exists()) {
-                // useLines schließt den Reader automatisch nach dem Lesen
-                val content = csvFile.bufferedReader().useLines { lines ->
-                    lines.joinToString("\n")
-                }
-                textView.text = content
-                AppLogger.i(TAG, "CSV loaded successfully")
-            } else {
-                textView.text = getString(R.string.no_data_available)
-                AppLogger.i(TAG, "CSV file does not exist yet")
-            }
-        } catch (e: Exception) {
-            textView.text = getString(R.string.error_reading_csv, e.message)
-            AppLogger.e(TAG, "Error reading CSV file", e)
+    /** UI-Elemente referenzieren – keine Logik hier */
+    private fun setupViews() {
+        recyclerView = findViewById(R.id.recyclerView)
+        progressBar = findViewById(R.id.progressBar)
+        tvEmpty = findViewById(R.id.tvEmpty)
+        tvError = findViewById(R.id.tvError)
+    }
+
+    /** RecyclerView mit Adapter und LayoutManager initialisieren */
+    private fun setupRecyclerView() {
+        adapter = GpsCoordinateAdapter { coordinate ->
+            // Klick-Handling: Detail-Screen über Factory-Methode öffnen
+            AppLogger.d(TAG, "Item clicked: ${coordinate.timestamp}")
+            startActivity(ThirdActivity.newIntent(this, coordinate))
         }
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
+    }
+
+    /**
+     * Beobachtet den UI-State des ViewModels und aktualisiert die Anzeige.
+     * Nutzt repeatOnLifecycle, damit die Collection nur im STARTED-State läuft.
+     */
+    private fun observeUiState() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    when (state) {
+                        is CsvUiState.Loading -> showLoading()
+                        is CsvUiState.Success -> showData(state)
+                        is CsvUiState.Empty -> showEmpty()
+                        is CsvUiState.Error -> showError(state.message)
+                    }
+                }
+            }
+        }
+    }
+
+    // --- UI-State-Methoden: Jeweils nur einen Zustand sichtbar machen ---
+
+    private fun showLoading() {
+        progressBar.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
+        tvEmpty.visibility = View.GONE
+        tvError.visibility = View.GONE
+    }
+
+    private fun showData(state: CsvUiState.Success) {
+        progressBar.visibility = View.GONE
+        recyclerView.visibility = View.VISIBLE
+        tvEmpty.visibility = View.GONE
+        tvError.visibility = View.GONE
+        adapter.submitList(state.coordinates)
+
+        // Toolbar-Titel mit Anzahl der Einträge aktualisieren
+        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        toolbar.title = getString(R.string.csv_viewer_title_count, state.coordinates.size)
+    }
+
+    private fun showEmpty() {
+        progressBar.visibility = View.GONE
+        recyclerView.visibility = View.GONE
+        tvEmpty.visibility = View.VISIBLE
+        tvError.visibility = View.GONE
+    }
+
+    private fun showError(message: String) {
+        progressBar.visibility = View.GONE
+        recyclerView.visibility = View.GONE
+        tvEmpty.visibility = View.GONE
+        tvError.visibility = View.VISIBLE
+        tvError.text = getString(R.string.error_reading_csv, message)
     }
 
     companion object {

@@ -8,4 +8,84 @@
     <string name="no_data_available">No GPS data recorded yet.\nGo to Location screen, enable recording, and fetch a location.</string>
     <string name="error_reading_csv">Error reading CSV: %1$s</string>
     <string name="location_text">Lat: %1$.4f, Lon: %2$.4f</string>
+    <string name="csv_altitude_text">Alt: %1$.1f m</string>
+    <string name="csv_viewer_title_count">GPS Log (%1$d entries)</string>
+    <string name="csv_loading">Loading GPS data…</string>
+    <string name="csv_item_accessibility">Entry %1$d: %2$s, Latitude %3$.4f, Longitude %4$.4f, Altitude %5$.1f meters</string>
+
+    <!-- Detail Activity -->
+    <string name="detail_title">GPS Detail</string>
+    <string name="detail_label_timestamp">Timestamp</string>
+    <string name="detail_label_latitude">Latitude</string>
+    <string name="detail_label_longitude">Longitude</string>
+    <string name="detail_label_altitude">Altitude</string>
+    <string name="detail_error_no_data">No coordinate data available.</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">Settings</string>
+
+    <!-- Preference Categories -->
+    <string name="pref_category_profile">Profile</string>
+    <string name="pref_category_location">Location</string>
+    <string name="pref_category_map">Map</string>
+    <string name="pref_category_appearance">Appearance</string>
+
+    <!-- Profile -->
+    <string name="pref_user_name_title">User Name</string>
+    <string name="pref_user_name_summary">Your display name in the app</string>
+    <string name="pref_user_name_empty_error">Name cannot be empty</string>
+
+    <!-- Location -->
+    <string name="pref_location_recording_title">GPS Recording</string>
+    <string name="pref_location_recording_summary">Automatically start GPS recording when opening Location screen</string>
+    <string name="pref_location_interval_title">Update Interval</string>
+    <string name="pref_location_interval_summary">How often the GPS position is updated</string>
+
+    <!-- Map -->
+    <string name="pref_map_zoom_title">Default Zoom Level</string>
+    <string name="pref_map_zoom_summary">Initial zoom level when opening the map</string>
+
+    <!-- Appearance -->
+    <string name="pref_theme_title">Theme</string>
+    <string name="pref_theme_summary">Choose light, dark or system theme</string>
+    <string name="pref_dynamic_colors_title">Dynamic Colors</string>
+    <string name="pref_dynamic_colors_summary">Use Material You colors from your wallpaper (Android 12+)</string>
+
+    <!-- Arrays für ListPreferences -->
+    <string-array name="location_interval_entries">
+        <item>5 seconds</item>
+        <item>10 seconds</item>
+        <item>30 seconds</item>
+        <item>60 seconds</item>
+    </string-array>
+    <string-array name="location_interval_values">
+        <item>5000</item>
+        <item>10000</item>
+        <item>30000</item>
+        <item>60000</item>
+    </string-array>
+
+    <string-array name="map_zoom_entries">
+        <item>City (10)</item>
+        <item>District (13)</item>
+        <item>Street (15)</item>
+        <item>Building (18)</item>
+    </string-array>
+    <string-array name="map_zoom_values">
+        <item>10.0</item>
+        <item>13.0</item>
+        <item>15.0</item>
+        <item>18.0</item>
+    </string-array>
+
+    <string-array name="theme_entries">
+        <item>System</item>
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item>system</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
 </resources>

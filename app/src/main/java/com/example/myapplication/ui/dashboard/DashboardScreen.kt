@@ -12,30 +12,23 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.myapplication.ui.settings.SettingsActivity
 import com.example.myapplication.util.AppLogger
 
 @Composable
-fun DashboardScreen(
-    userName: String,
-    onNavigateBack: () -> Unit
-) {
+fun DashboardScreen(userName: String) {
     AppLogger.d(TAG, "Dashboard displayed for user: $userName")
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp)
     ) {
-        TextButton(onClick = onNavigateBack) {
-            Text("< Back")
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
         Text(
             text = "Hello, $userName!",
             style = MaterialTheme.typography.headlineLarge
@@ -68,6 +61,7 @@ fun DashboardScreen(
             DashboardCard(
                 title = "Settings",
                 description = "Configure app preferences",
+                onClick = { context.startActivity(SettingsActivity.newIntent(context)) },
                 modifier = Modifier.weight(1f)
             )
             DashboardCard(
@@ -83,13 +77,15 @@ fun DashboardScreen(
 private fun DashboardCard(
     title: String,
     description: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null
 ) {
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
-        )
+        ),
+        onClick = { onClick?.invoke() }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(

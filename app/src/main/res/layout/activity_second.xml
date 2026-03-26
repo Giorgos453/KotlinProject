@@ -1,39 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/csv_viewer_title"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp" />
+    <!-- Toolbar mit Titel und Zurück-Pfeil -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:title="@string/csv_viewer_title"
+        app:titleTextColor="@android:color/white"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:navigationIconTint="@android:color/white" />
 
-    <ScrollView
+    <!-- FrameLayout als Container für die drei Zustände: Loading, Empty, Liste -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/tvCsvContent"
-            android:layout_width="match_parent"
+        <!-- Ladeanzeige (sichtbar während Datei gelesen wird) -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/no_data_available"
-            android:textSize="14sp"
-            android:fontFamily="monospace" />
-    </ScrollView>
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:contentDescription="@string/csv_loading" />
 
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/back"
-        android:layout_marginTop="16dp" />
+        <!-- Platzhalter bei leerer/fehlender Datei -->
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/no_data_available"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:padding="32dp"
+            android:visibility="gone" />
+
+        <!-- Fehlermeldung -->
+        <TextView
+            android:id="@+id/tvError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:textColor="@android:color/holo_red_dark"
+            android:textAlignment="center"
+            android:padding="32dp"
+            android:visibility="gone" />
+
+        <!-- GPS-Koordinaten als RecyclerView-Liste -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
 </LinearLayout>

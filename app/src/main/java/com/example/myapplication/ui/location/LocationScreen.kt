@@ -12,12 +12,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import android.content.Intent
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import com.example.myapplication.SecondActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -32,8 +34,7 @@ import com.example.myapplication.util.AppLogger
 
 @Composable
 fun LocationScreen(
-    viewModel: LocationViewModel,
-    onNavigateBack: () -> Unit
+    viewModel: LocationViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -80,15 +81,6 @@ fun LocationScreen(
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TextButton(
-            onClick = onNavigateBack,
-            modifier = Modifier.align(Alignment.Start)
-        ) {
-            Text("< Back")
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
         Text(
             text = "Location",
             style = MaterialTheme.typography.headlineLarge
@@ -193,6 +185,16 @@ fun LocationScreen(
                     }
                 }
             }
+        }
+
+        // Button zum Öffnen des GPS-Logs (CSV Viewer)
+        OutlinedButton(
+            onClick = {
+                context.startActivity(Intent(context, SecondActivity::class.java))
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("View GPS Log")
         }
     }
 }

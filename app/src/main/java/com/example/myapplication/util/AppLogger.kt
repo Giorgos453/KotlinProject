@@ -13,6 +13,10 @@ object AppLogger {
         Log.i("$PREFIX:$tag", message)
     }
 
+    fun w(tag: String, message: String) {
+        Log.w("$PREFIX:$tag", message)
+    }
+
     fun e(tag: String, message: String, throwable: Throwable? = null) {
         Log.e("$PREFIX:$tag", message, throwable)
     }
