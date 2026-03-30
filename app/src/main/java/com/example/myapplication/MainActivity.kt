@@ -19,13 +19,26 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.data.database.entity.UserEntity
+import es.upm.btb.helloworldkt.persistence.room.AppDatabase
+import com.example.myapplication.data.database.repository.CampusMarkerRepository
+import com.example.myapplication.data.database.repository.GpsCoordinateRepository
+import com.example.myapplication.data.database.repository.UserRepository
 import com.example.myapplication.data.geocoding.GeocodingRepository
+import com.example.myapplication.data.network.WeatherRemoteDataSource
+import com.example.myapplication.data.network.WeatherRepository
+import com.example.myapplication.data.security.ApiKeyManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import com.example.myapplication.data.location.LocationRepository
 import com.example.myapplication.data.preferences.PreferencesManager
 import com.example.myapplication.navigation.AppNavHost
 import com.example.myapplication.navigation.BottomNavBar
 import com.example.myapplication.ui.location.LocationViewModel
 import com.example.myapplication.ui.map.MapViewModel
+import com.example.myapplication.ui.settings.SettingsActivity
+import com.example.myapplication.ui.weather.WeatherViewModel
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.util.AppLogger
 import com.google.android.gms.location.LocationServices
@@ -35,31 +48,52 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var locationViewModelFactory: LocationViewModel.Factory
     private lateinit var mapViewModelFactory: MapViewModel.Factory
+    private lateinit var weatherViewModelFactory: WeatherViewModel.Factory
     private lateinit var preferencesManager: PreferencesManager
+    private lateinit var userRepository: UserRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppLogger.i(TAG, "onCreate")
 
-        // MapLibre muss vor der Erstellung einer MapView initialisiert werden.
         MapLibre.getInstance(this)
 
-        // PreferencesManager als zentrale Repository-Schicht für alle SharedPreferences-Zugriffe
         preferencesManager = PreferencesManager(applicationContext)
+
+        // Room-Datenbank und Repositories initialisieren
+        val database = AppDatabase.getInstance(applicationContext)
+        val gpsRepository = GpsCoordinateRepository(database.locationDao())
+        val campusMarkerRepository = CampusMarkerRepository(database.campusMarkerDao())
+        userRepository = UserRepository(database.userDao())
 
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val locationRepository = LocationRepository(fusedLocationClient)
-        // Context wird an die Factory übergeben, damit das ViewModel CSV-Dateien schreiben kann
-        locationViewModelFactory = LocationViewModel.Factory(locationRepository, applicationContext)
+        // LocationViewModel nutzt jetzt GpsCoordinateRepository statt Context fuer CSV
+        locationViewModelFactory = LocationViewModel.Factory(locationRepository, gpsRepository)
 
         val geocodingRepository = GeocodingRepository(this)
-        mapViewModelFactory = MapViewModel.Factory(locationRepository, geocodingRepository)
+        // MapViewModel nutzt jetzt CampusMarkerRepository statt statische CampusTourData
+        mapViewModelFactory = MapViewModel.Factory(locationRepository, geocodingRepository, campusMarkerRepository)
+
+        // Weather: Repository und ViewModel-Factory erstellen
+        val apiKeyManager = ApiKeyManager.getInstance(applicationContext)
+        val weatherRepository = WeatherRepository(
+            remoteDataSource = WeatherRemoteDataSource(),
+            weatherCacheDao = database.weatherCacheDao(),
+            apiKeyManager = apiKeyManager
+        )
+        weatherViewModelFactory = WeatherViewModel.Factory(weatherRepository, applicationContext)
+
+        // API-Key-Check: Falls kein Key vorhanden, direkt zu Settings navigieren
+        if (!apiKeyManager.hasApiKey()) {
+            AppLogger.i(TAG, "No API key found – redirecting to Settings")
+            startActivity(SettingsActivity.newIntent(this))
+        }
 
         val shouldShowDialog = !preferencesManager.hasUserName()
 
         enableEdgeToEdge()
         setContent {
-            // Theme-Einstellungen aus PreferencesManager lesen
             val themeMode = remember { mutableStateOf(preferencesManager.themeMode) }
             val dynamicColors = remember { mutableStateOf(preferencesManager.dynamicColorsEnabled) }
 
@@ -75,16 +109,13 @@ class MainActivity : ComponentActivity() {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
 
-                // State für den AlertDialog zur Benutzer-ID-Eingabe
                 var showUserIdDialog by remember { mutableStateOf(shouldShowDialog) }
                 var userIdInput by remember { mutableStateOf("") }
-                // userName wird bei onResume aus PreferencesManager aktualisiert
                 var userName by remember { mutableStateOf(preferencesManager.userName) }
 
-                // AlertDialog anzeigen, falls keine Benutzer-ID gespeichert ist
                 if (showUserIdDialog) {
                     AlertDialog(
-                        onDismissRequest = { /* Dialog kann nicht geschlossen werden ohne Eingabe */ },
+                        onDismissRequest = { },
                         title = { Text("User Identifier") },
                         text = {
                             OutlinedTextField(
@@ -98,9 +129,11 @@ class MainActivity : ComponentActivity() {
                             TextButton(
                                 onClick = {
                                     if (userIdInput.isNotBlank()) {
-                                        preferencesManager.userName = userIdInput.trim()
-                                        AppLogger.i(TAG, "User ID saved: ${userIdInput.trim()}")
-                                        userName = userIdInput.trim()
+                                        val trimmed = userIdInput.trim()
+                                        preferencesManager.userName = trimmed
+                                        saveUserToDatabase(trimmed)
+                                        AppLogger.i(TAG, "User ID saved: $trimmed")
+                                        userName = trimmed
                                         showUserIdDialog = false
                                     }
                                 }
@@ -114,24 +147,18 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        // Bottom Navigation Bar – Tab-Wechsel mit State-Erhaltung
                         BottomNavBar(
                             currentRoute = currentRoute,
                             onItemSelected = { item ->
-                                // userName bei jedem Tab-Wechsel aktualisieren
-                                // (könnte in SettingsActivity geändert worden sein)
                                 userName = preferencesManager.userName
                                 themeMode.value = preferencesManager.themeMode
                                 dynamicColors.value = preferencesManager.dynamicColorsEnabled
 
                                 navController.navigate(item.route) {
-                                    // Pop bis zum Start-Ziel, damit der Backstack nicht wächst
                                     popUpTo(navController.graph.findStartDestination().id) {
                                         saveState = true
                                     }
-                                    // Kein doppeltes Erstellen desselben Ziels
                                     launchSingleTop = true
-                                    // Zustand beim Tab-Wechsel wiederherstellen
                                     restoreState = true
                                 }
                             }
@@ -143,10 +170,12 @@ class MainActivity : ComponentActivity() {
                         userName = userName,
                         onNameSaved = { name ->
                             preferencesManager.userName = name
+                            saveUserToDatabase(name)
                             userName = name
                         },
                         locationViewModelFactory = locationViewModelFactory,
                         mapViewModelFactory = mapViewModelFactory,
+                        weatherViewModelFactory = weatherViewModelFactory,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -177,6 +206,18 @@ class MainActivity : ComponentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         AppLogger.i(TAG, "onDestroy")
+    }
+
+    /** Speichert den Benutzernamen parallel in der Room-Datenbank */
+    private fun saveUserToDatabase(name: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                userRepository.insert(UserEntity(name = name))
+                AppLogger.i(TAG, "User saved to database: $name")
+            } catch (e: Exception) {
+                AppLogger.e(TAG, "Error saving user to database", e)
+            }
+        }
     }
 
     companion object {

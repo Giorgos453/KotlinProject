@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.home
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +19,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.myapplication.R
 
 @Composable
 fun HomeScreen(
@@ -26,6 +29,7 @@ fun HomeScreen(
     onNameSaved: (String) -> Unit
 ) {
     var nameInput by rememberSaveable { mutableStateOf(userName) }
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -51,7 +55,11 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { onNameSaved(nameInput.ifBlank { "User" }) },
+            onClick = {
+                val name = nameInput.ifBlank { "User" }
+                onNameSaved(name)
+                Toast.makeText(context, context.getString(R.string.user_saved_to_db), Toast.LENGTH_SHORT).show()
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Save Name")

@@ -39,19 +39,20 @@ fun LocationScreen(
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
-    // Zähler damit der Toast bei jedem Refresh erscheint, auch wenn Koordinaten gleich bleiben
-    val toastTrigger = remember { mutableIntStateOf(0) }
+    // Toast nur bei manuellem Refresh anzeigen, nicht bei automatischen Updates
+    val showToastOnNextUpdate = remember { mutableIntStateOf(0) }
 
-    // Toast-Benachrichtigung bei jeder GPS-Koordinatenaktualisierung
-    LaunchedEffect(uiState.latitude, uiState.longitude, toastTrigger.intValue) {
-        val lat = uiState.latitude
-        val lon = uiState.longitude
-        if (lat != null && lon != null) {
-            Toast.makeText(
-                context,
-                "New location: $lat, $lon",
-                Toast.LENGTH_SHORT
-            ).show()
+    LaunchedEffect(showToastOnNextUpdate.intValue) {
+        if (showToastOnNextUpdate.intValue > 0) {
+            val lat = uiState.latitude
+            val lon = uiState.longitude
+            if (lat != null && lon != null) {
+                Toast.makeText(
+                    context,
+                    "New location: $lat, $lon",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
@@ -172,7 +173,7 @@ fun LocationScreen(
                         Spacer(modifier = Modifier.height(24.dp))
                         Button(onClick = {
                             viewModel.fetchLocation()
-                            toastTrigger.intValue++
+                            showToastOnNextUpdate.intValue++
                         }) {
                             Text("Refresh")
                         }

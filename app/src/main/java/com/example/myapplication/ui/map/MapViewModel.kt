@@ -3,10 +3,10 @@ package com.example.myapplication.ui.map
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.data.database.entity.CampusMarkerEntity
+import com.example.myapplication.data.database.repository.CampusMarkerRepository
 import com.example.myapplication.data.geocoding.GeocodingRepository
 import com.example.myapplication.data.location.LocationRepository
-import com.example.myapplication.data.map.CampusMarker
-import com.example.myapplication.data.map.CampusTourData
 import com.example.myapplication.util.AppLogger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +16,8 @@ import kotlinx.coroutines.launch
 data class MapUiState(
     val userLatitude: Double? = null,
     val userLongitude: Double? = null,
-    val campusMarkers: List<CampusMarker> = CampusTourData.markers,
-    val selectedMarker: CampusMarker? = null,
+    val campusMarkers: List<CampusMarkerEntity> = emptyList(),
+    val selectedMarker: CampusMarkerEntity? = null,
     val userAddress: String? = null,
     val selectedMarkerAddress: String? = null,
     val isLoading: Boolean = false,
@@ -25,13 +25,32 @@ data class MapUiState(
     val permissionGranted: Boolean = false
 )
 
+/**
+ * ViewModel fuer Map-Screen.
+ * Laedt Campus-Marker jetzt aus der Room-Datenbank statt aus statischer Liste.
+ */
 class MapViewModel(
     private val locationRepository: LocationRepository,
-    private val geocodingRepository: GeocodingRepository
+    private val geocodingRepository: GeocodingRepository,
+    private val campusMarkerRepository: CampusMarkerRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MapUiState())
     val uiState: StateFlow<MapUiState> = _uiState.asStateFlow()
+
+    init {
+        // Campus-Marker aus Room-Datenbank laden (Flow-basiert)
+        loadCampusMarkers()
+    }
+
+    /** Beobachtet Campus-Marker als Flow – UI aktualisiert sich automatisch */
+    private fun loadCampusMarkers() {
+        viewModelScope.launch {
+            campusMarkerRepository.allMarkers.collect { markers ->
+                _uiState.value = _uiState.value.copy(campusMarkers = markers)
+            }
+        }
+    }
 
     fun onPermissionResult(granted: Boolean) {
         AppLogger.i(TAG, "Permission result: $granted")
@@ -43,11 +62,6 @@ class MapViewModel(
         }
     }
 
-    /**
-     * Collects the continuous location Flow for the ViewModel's lifetime.
-     * The FusedLocationProviderClient subscription is cancelled automatically
-     * when the coroutine scope is cleared.
-     */
     fun startLocationUpdates() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
@@ -83,7 +97,7 @@ class MapViewModel(
         }
     }
 
-    fun onMarkerSelected(marker: CampusMarker) {
+    fun onMarkerSelected(marker: CampusMarkerEntity) {
         AppLogger.d(TAG, "Marker selected: ${marker.title}")
         _uiState.value = _uiState.value.copy(
             selectedMarker = marker,
@@ -109,12 +123,13 @@ class MapViewModel(
 
     class Factory(
         private val locationRepository: LocationRepository,
-        private val geocodingRepository: GeocodingRepository
+        private val geocodingRepository: GeocodingRepository,
+        private val campusMarkerRepository: CampusMarkerRepository
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(MapViewModel::class.java)) {
-                return MapViewModel(locationRepository, geocodingRepository) as T
+                return MapViewModel(locationRepository, geocodingRepository, campusMarkerRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

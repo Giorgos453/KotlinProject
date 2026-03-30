@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -48,6 +49,12 @@ enum class NavigationItem(
         label = "Map",
         icon = Icons.Default.Place,
         accessibilityLabel = "Navigate to Map"
+    ),
+    WEATHER(
+        route = Screen.Weather.route,
+        label = "Weather",
+        icon = Icons.Default.Star,
+        accessibilityLabel = "Navigate to Weather"
     )
 }
 

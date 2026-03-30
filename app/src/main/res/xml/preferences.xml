@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Profil-Einstellungen -->
+    <!-- Profil & API-Konfiguration (kombiniert) -->
     <PreferenceCategory
-        app:key="category_profile"
-        app:title="@string/pref_category_profile">
+        app:key="category_profile_api"
+        app:title="@string/pref_category_profile_api">
 
-        <EditTextPreference
-            app:key="user_id"
-            app:title="@string/pref_user_name_title"
-            app:summary="@string/pref_user_name_summary"
-            app:defaultValue="User"
-            app:useSimpleSummaryProvider="true" />
+        <Preference
+            app:key="manage_profile_api"
+            app:title="@string/pref_profile_api_title"
+            app:summary="@string/pref_profile_api_summary" />
     </PreferenceCategory>
 
     <!-- Location-Einstellungen -->

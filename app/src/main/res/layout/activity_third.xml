@@ -136,6 +136,28 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Update-Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_update"
+                android:layout_marginBottom="12dp"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:visibility="gone" />
+
+            <!-- Delete-Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDelete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_delete"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@android:color/holo_red_light"
+                app:icon="@android:drawable/ic_menu_delete"
+                app:iconTint="@android:color/white"
+                android:visibility="gone" />
+
             <!-- Fehlermeldung falls Intent-Daten fehlen -->
             <TextView
                 android:id="@+id/tvDetailError"

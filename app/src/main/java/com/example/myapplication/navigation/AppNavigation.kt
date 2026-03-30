@@ -12,6 +12,8 @@ import com.example.myapplication.ui.location.LocationScreen
 import com.example.myapplication.ui.location.LocationViewModel
 import com.example.myapplication.ui.map.MapScreen
 import com.example.myapplication.ui.map.MapViewModel
+import com.example.myapplication.ui.weather.WeatherScreen
+import com.example.myapplication.ui.weather.WeatherViewModel
 
 /**
  * Typsichere Routen-Definition als Sealed Class.
@@ -22,6 +24,7 @@ sealed class Screen(val route: String) {
     data object Dashboard : Screen("dashboard")
     data object Location : Screen("location")
     data object Map : Screen("map")
+    data object Weather : Screen("weather")
 }
 
 /**
@@ -36,6 +39,7 @@ fun AppNavHost(
     onNameSaved: (String) -> Unit,
     locationViewModelFactory: LocationViewModel.Factory,
     mapViewModelFactory: MapViewModel.Factory,
+    weatherViewModelFactory: WeatherViewModel.Factory,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -62,6 +66,11 @@ fun AppNavHost(
         composable(Screen.Map.route) {
             val mapViewModel: MapViewModel = viewModel(factory = mapViewModelFactory)
             MapScreen(viewModel = mapViewModel)
+        }
+
+        composable(Screen.Weather.route) {
+            val weatherViewModel: WeatherViewModel = viewModel(factory = weatherViewModelFactory)
+            WeatherScreen(viewModel = weatherViewModel)
         }
     }
 }

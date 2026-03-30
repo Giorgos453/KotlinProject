@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -37,6 +38,11 @@ android {
     }
 }
 
+// Room-Schema in Versionskontrolle exportieren
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -55,6 +61,24 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.recyclerview)
     implementation(libs.google.material)
+    // Retrofit + OkHttp fuer API-Aufrufe
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+    implementation(libs.gson)
+    // Glide fuer Bild-Laden (Wetter-Icons)
+    implementation(libs.glide)
+    implementation(libs.glide.compose)
+    // Accompanist Permissions fuer Compose
+    implementation(libs.accompanist.permissions)
+    // Verschluesselte SharedPreferences fuer sensible Daten (API-Key)
+    implementation(libs.androidx.security.crypto)
+    // Room-Datenbank
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    androidTestImplementation(libs.androidx.room.testing)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

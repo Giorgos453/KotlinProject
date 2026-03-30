@@ -20,11 +20,29 @@
     <string name="detail_label_longitude">Longitude</string>
     <string name="detail_label_altitude">Altitude</string>
     <string name="detail_error_no_data">No coordinate data available.</string>
+    <string name="detail_update">Update Coordinates</string>
+    <string name="detail_update_confirm_title">Update GPS Entry?</string>
+    <string name="detail_update_confirm_message">Update this entry?\n\nTimestamp: %1$s\nLatitude: %2$.6f\nLongitude: %3$.6f\nAltitude: %4$.1f m</string>
+    <string name="detail_delete">Delete Coordinate</string>
+    <string name="detail_delete_confirm_title">Delete GPS Entry?</string>
+    <string name="detail_delete_confirm_message">This entry will be permanently deleted.</string>
+    <string name="detail_delete_confirm_details">Delete this entry?\n\nTimestamp: %1$s\nLatitude: %2$.6f\nLongitude: %3$.6f\nAltitude: %4$.1f m</string>
+    <string name="delete_all">Delete All</string>
+    <string name="delete_all_confirm_title">Delete All GPS Entries?</string>
+    <string name="delete_all_confirm_message">All %1$d entries will be permanently deleted. This cannot be undone.</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="entry_deleted">Entry deleted</string>
+    <string name="all_entries_deleted">All entries deleted</string>
+    <string name="undo">Undo</string>
+    <string name="user_saved_to_db">User profile saved</string>
+    <string name="error_reading_db">Error reading database: %1$s</string>
 
     <!-- Settings Activity -->
     <string name="settings_title">Settings</string>
 
     <!-- Preference Categories -->
+    <string name="pref_category_profile_api">Profile &amp; API</string>
     <string name="pref_category_profile">Profile</string>
     <string name="pref_category_location">Location</string>
     <string name="pref_category_map">Map</string>
@@ -50,6 +68,49 @@
     <string name="pref_theme_summary">Choose light, dark or system theme</string>
     <string name="pref_dynamic_colors_title">Dynamic Colors</string>
     <string name="pref_dynamic_colors_summary">Use Material You colors from your wallpaper (Android 12+)</string>
+
+    <!-- Profile & API combined -->
+    <string name="pref_profile_api_title">User Identifier &amp; API Key</string>
+    <string name="pref_profile_api_summary">Configure your username and OpenWeatherMap API key</string>
+    <string name="settings_user_identifier_hint">User Identifier</string>
+    <string name="settings_user_identifier_helper">Your UPM username (e.g. btabuenca)</string>
+    <string name="settings_api_key_hint">OpenWeatherMap API Key</string>
+    <string name="settings_api_key_helper">Your OpenWeatherMap appid. Stored encrypted on device.</string>
+    <string name="settings_saved_success">Settings saved</string>
+
+    <!-- API Key -->
+    <string name="pref_category_api">API Configuration</string>
+    <string name="pref_api_key_title">API Key</string>
+    <string name="pref_api_key_summary_set">Key is saved (encrypted)</string>
+    <string name="pref_api_key_summary_not_set">No API key configured</string>
+    <string name="api_key_status_label">Status</string>
+    <string name="api_key_status_saved">Key saved (encrypted)</string>
+    <string name="api_key_status_not_set">No API key set</string>
+    <string name="api_key_hint">Enter API Key</string>
+    <string name="api_key_helper">Minimum 4 characters. Stored encrypted on device.</string>
+    <string name="api_key_placeholder">Saved key present</string>
+    <string name="api_key_save">Save</string>
+    <string name="api_key_clear">Clear Key</string>
+    <string name="api_key_clear_confirm_title">Delete API Key?</string>
+    <string name="api_key_clear_confirm_message">The stored API key will be permanently deleted. You will need to enter it again.</string>
+    <string name="api_key_missing_title">API Key Required</string>
+    <string name="api_key_missing_message">Please configure your API key in Settings before using this feature.</string>
+    <string name="api_key_go_to_settings">Go to Settings</string>
+
+    <!-- Weather -->
+    <string name="weather_title">Weather</string>
+    <string name="weather_refresh">Refresh weather</string>
+    <string name="weather_loading">Loading weather data…</string>
+    <string name="weather_loading_location">Getting your location…</string>
+    <string name="weather_feels_like">Feels like</string>
+    <string name="weather_humidity">Humidity</string>
+    <string name="weather_wind">Wind</string>
+    <string name="weather_pressure">Pressure</string>
+    <string name="weather_from_cache">Showing cached data (no network)</string>
+    <string name="weather_retry">Retry</string>
+    <string name="weather_permission_needed">Location permission is needed to show weather for your current position.</string>
+    <string name="weather_grant_permission">Grant Permission</string>
+    <string name="weather_no_location">Could not determine your location.</string>
 
     <!-- Arrays für ListPreferences -->
     <string-array name="location_interval_entries">

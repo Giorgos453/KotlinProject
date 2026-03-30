@@ -32,7 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.example.myapplication.R
-import com.example.myapplication.data.map.CampusMarker
+import com.example.myapplication.data.database.entity.CampusMarkerEntity
 import com.example.myapplication.util.AppLogger
 import org.maplibre.android.annotations.IconFactory
 import org.maplibre.android.annotations.Marker
@@ -99,7 +99,7 @@ fun MapScreen(
     Box(modifier = Modifier.fillMaxSize()) {
 
         val userMarkerHolder = remember { arrayOfNulls<Marker>(1) }
-        val campusMarkerLookup = remember { mutableMapOf<Long, CampusMarker>() }
+        val campusMarkerLookup = remember { mutableMapOf<Long, CampusMarkerEntity>() }
         val campusMarkerObjects = remember { mutableListOf<Marker>() }
         val polylineHolder = remember { arrayOfNulls<Polyline>(1) }
         val mapViewHolder = remember { arrayOfNulls<MapView>(1) }
@@ -280,7 +280,7 @@ fun MapScreen(
 
 @Composable
 fun MarkerInfoCard(
-    marker: CampusMarker,
+    marker: CampusMarkerEntity,
     address: String?,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier

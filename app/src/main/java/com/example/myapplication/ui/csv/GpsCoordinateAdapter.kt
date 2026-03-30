@@ -8,22 +8,22 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.data.csv.GpsCoordinate
+import es.upm.btb.helloworldkt.persistence.room.LocationEntity
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
- * RecyclerView-Adapter für GPS-Koordinaten.
- * Nutzt ListAdapter + DiffUtil für effizientes Rendering bei Datenänderungen.
- *
- * Click-Handling: Der Adapter ist "dumm" – er leitet Klicks per Lambda
- * nach außen weiter. Die Activity entscheidet, was beim Klick passiert.
+ * RecyclerView-Adapter fuer GPS-Koordinaten aus der Room-Datenbank.
+ * Nutzt ListAdapter + DiffUtil fuer effizientes Rendering bei Datenaenderungen.
  */
 class GpsCoordinateAdapter(
-    private val onItemClick: (GpsCoordinate) -> Unit
-) : ListAdapter<GpsCoordinate, GpsCoordinateAdapter.ViewHolder>(
-    GpsCoordinateDiffCallback()
+    private val onItemClick: (LocationEntity) -> Unit
+) : ListAdapter<LocationEntity, GpsCoordinateAdapter.ViewHolder>(
+    LocationDiffCallback()
 ) {
 
-    // Debounce: verhindert Doppelklicks (schnelle Mehrfachklicks)
+    // Debounce: verhindert Doppelklicks
     private var lastClickTime = 0L
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,9 +34,8 @@ class GpsCoordinateAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, position + 1) // +1 für 1-basierte Nummerierung
+        holder.bind(item, position + 1)
 
-        // Click-Listener auf dem gesamten Item
         holder.itemView.setOnClickListener {
             val now = System.currentTimeMillis()
             if (now - lastClickTime > DEBOUNCE_INTERVAL_MS) {
@@ -52,9 +51,11 @@ class GpsCoordinateAdapter(
         private val tvCoordinates: TextView = itemView.findViewById(R.id.tvCoordinates)
         private val tvAltitude: TextView = itemView.findViewById(R.id.tvAltitude)
 
-        fun bind(coordinate: GpsCoordinate, index: Int) {
+        private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+
+        fun bind(coordinate: LocationEntity, index: Int) {
             tvIndex.text = "#$index"
-            tvTimestamp.text = coordinate.timestamp
+            tvTimestamp.text = dateFormat.format(Date(coordinate.timestamp))
             tvCoordinates.text = itemView.context.getString(
                 R.string.location_text,
                 coordinate.latitude,
@@ -65,11 +66,10 @@ class GpsCoordinateAdapter(
                 coordinate.altitude
             )
 
-            // Accessibility: gesamten Eintrag als zusammenhängend beschreiben
             itemView.contentDescription = itemView.context.getString(
                 R.string.csv_item_accessibility,
                 index,
-                coordinate.timestamp,
+                dateFormat.format(Date(coordinate.timestamp)),
                 coordinate.latitude,
                 coordinate.longitude,
                 coordinate.altitude
@@ -78,21 +78,19 @@ class GpsCoordinateAdapter(
     }
 
     companion object {
-        /** Minimaler Abstand zwischen zwei Klicks in Millisekunden */
         private const val DEBOUNCE_INTERVAL_MS = 400L
     }
 }
 
 /**
- * DiffUtil-Callback für effiziente Listenaktualisierungen.
- * Vergleicht Einträge anhand des Zeitstempels (eindeutig pro GPS-Messung).
+ * DiffUtil-Callback – vergleicht Eintraege anhand der Room-ID (eindeutig).
  */
-private class GpsCoordinateDiffCallback : DiffUtil.ItemCallback<GpsCoordinate>() {
-    override fun areItemsTheSame(oldItem: GpsCoordinate, newItem: GpsCoordinate): Boolean {
-        return oldItem.timestamp == newItem.timestamp
+private class LocationDiffCallback : DiffUtil.ItemCallback<LocationEntity>() {
+    override fun areItemsTheSame(oldItem: LocationEntity, newItem: LocationEntity): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: GpsCoordinate, newItem: GpsCoordinate): Boolean {
+    override fun areContentsTheSame(oldItem: LocationEntity, newItem: LocationEntity): Boolean {
         return oldItem == newItem
     }
 }
