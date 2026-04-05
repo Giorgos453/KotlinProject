@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -35,6 +36,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
@@ -74,6 +76,14 @@ dependencies {
     implementation(libs.accompanist.permissions)
     // Verschluesselte SharedPreferences fuer sensible Daten (API-Key)
     implementation(libs.androidx.security.crypto)
+    // Firebase (BOM ensures consistent versions across all Firebase libs)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
+    // Credential Manager for Google Sign-In
+    implementation(libs.credentials)
+    implementation(libs.credentials.play.services)
+    implementation(libs.google.id)
     // Room-Datenbank
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
