@@ -1,0 +1,254 @@
+[
+  {
+    "text": "In what year was UPM officially founded?",
+    "option1": "1968",
+    "option2": "1971",
+    "option3": "1975",
+    "option4": "1980",
+    "correctIndex": 1,
+    "category": "UPM History"
+  },
+  {
+    "text": "How was UPM formed?",
+    "option1": "Split from Universidad de Alcala",
+    "option2": "Founded by Universidad Complutense",
+    "option3": "Evolved from Instituto Politecnico Superior",
+    "option4": "Merger of several technical schools in Madrid",
+    "correctIndex": 3,
+    "category": "UPM History"
+  },
+  {
+    "text": "Approximately how many Escuelas and faculties does UPM have?",
+    "option1": "8",
+    "option2": "12",
+    "option3": "21",
+    "option4": "30",
+    "correctIndex": 2,
+    "category": "UPM History"
+  },
+  {
+    "text": "Who was the first rector of UPM?",
+    "option1": "Jose Antonio de Artigas",
+    "option2": "Guillermo Cisneros",
+    "option3": "Carlos Conde",
+    "option4": "Rafael Portaencasa",
+    "correctIndex": 0,
+    "category": "UPM History"
+  },
+  {
+    "text": "Which is the oldest school of UPM, founded in 1802?",
+    "option1": "ETSI Caminos",
+    "option2": "ETSI Industriales",
+    "option3": "ETSI Minas",
+    "option4": "ETSI Navales",
+    "correctIndex": 0,
+    "category": "UPM History"
+  },
+  {
+    "text": "In which district of Madrid is Campus Sur located?",
+    "option1": "Moncloa",
+    "option2": "Vallecas",
+    "option3": "Chamartin",
+    "option4": "Arganzuela",
+    "correctIndex": 1,
+    "category": "Campus Sur"
+  },
+  {
+    "text": "Which Escuela is located on Campus Sur?",
+    "option1": "ETSI Aeronauticos",
+    "option2": "ETSISI",
+    "option3": "ETSI Caminos",
+    "option4": "ETSI Industriales",
+    "correctIndex": 1,
+    "category": "Campus Sur"
+  },
+  {
+    "text": "Which metro station is closest to Campus Sur?",
+    "option1": "Ciudad Universitaria",
+    "option2": "Sierra de Guadalupe",
+    "option3": "Nuevos Ministerios",
+    "option4": "Atocha",
+    "correctIndex": 1,
+    "category": "Campus Sur"
+  },
+  {
+    "text": "Which sports facility is located on Campus Sur?",
+    "option1": "Swimming pool",
+    "option2": "Tennis courts",
+    "option3": "Outdoor futsal courts",
+    "option4": "Athletics track",
+    "correctIndex": 2,
+    "category": "Campus Sur"
+  },
+  {
+    "text": "Which other Escuela is located alongside ETSISI on Campus Sur?",
+    "option1": "ETSIAE",
+    "option2": "ETSIST",
+    "option3": "ETSII",
+    "option4": "ETSAM",
+    "correctIndex": 1,
+    "category": "Campus Sur"
+  },
+  {
+    "text": "What does the abbreviation ETSISI stand for?",
+    "option1": "Escuela Tecnica Superior de Ingenieria de Sistemas Informaticos",
+    "option2": "Escuela Tecnica Superior de Informatica y Sistemas Integrados",
+    "option3": "Escuela Tecnica de Software e Ingenieria de Sistemas",
+    "option4": "Escuela Tecnica Superior de Inteligencia y Sistemas",
+    "correctIndex": 0,
+    "category": "Faculties"
+  },
+  {
+    "text": "Which faculty is responsible for architecture?",
+    "option1": "ETSI Industriales",
+    "option2": "ETSAM",
+    "option3": "ETSI Caminos",
+    "option4": "ETSI Montes",
+    "correctIndex": 1,
+    "category": "Faculties"
+  },
+  {
+    "text": "What does ETSIST stand for?",
+    "option1": "Escuela de Sistemas y Telecomunicaciones",
+    "option2": "Escuela Tecnica Superior de Ingenieria y Sistemas de Telecomunicacion",
+    "option3": "Escuela de Tecnologia de Sistemas Telematicos",
+    "option4": "Escuela Tecnica de Senales y Telecomunicacion",
+    "correctIndex": 1,
+    "category": "Faculties"
+  },
+  {
+    "text": "Which Escuela trains aerospace engineers?",
+    "option1": "ETSISI",
+    "option2": "ETSII",
+    "option3": "ETSIAE",
+    "option4": "ETSAM",
+    "correctIndex": 2,
+    "category": "Faculties"
+  },
+  {
+    "text": "At which Escuela do you study civil engineering?",
+    "option1": "ETSI Caminos, Canales y Puertos",
+    "option2": "ETSAM",
+    "option3": "ETSI Industriales",
+    "option4": "ETSI Minas y Energia",
+    "correctIndex": 0,
+    "category": "Faculties"
+  },
+  {
+    "text": "Which faculty is responsible for forestry sciences?",
+    "option1": "ETSI Agronomos",
+    "option2": "ETSI Montes, Forestal y del Medio Natural",
+    "option3": "ETSI Caminos",
+    "option4": "ETSI Navales",
+    "correctIndex": 1,
+    "category": "Faculties"
+  },
+  {
+    "text": "Where is the UPM rectorate located?",
+    "option1": "Campus Sur",
+    "option2": "Campus de Montegancedo",
+    "option3": "Ciudad Universitaria",
+    "option4": "Calle Ramiro de Maeztu",
+    "correctIndex": 3,
+    "category": "Buildings"
+  },
+  {
+    "text": "Which historic building houses ETSI Industriales?",
+    "option1": "Palacio de las Comunicaciones",
+    "option2": "Edificio A at Ciudad Universitaria",
+    "option3": "Building on Calle Jose Gutierrez Abascal",
+    "option4": "Edificio Torres Blancas",
+    "correctIndex": 2,
+    "category": "Buildings"
+  },
+  {
+    "text": "On which campus is CESVIMA (Supercomputing Center) located?",
+    "option1": "Campus Sur",
+    "option2": "Campus de Montegancedo",
+    "option3": "Ciudad Universitaria",
+    "option4": "Campus de Getafe",
+    "correctIndex": 1,
+    "category": "Buildings"
+  },
+  {
+    "text": "Which building on Campus Sur houses the library?",
+    "option1": "Edificio A",
+    "option2": "Edificio C",
+    "option3": "Edificio Central",
+    "option4": "Edificio B",
+    "correctIndex": 3,
+    "category": "Buildings"
+  },
+  {
+    "text": "Where is the ETSI Aeronauticos (ETSIAE) located?",
+    "option1": "Campus Sur",
+    "option2": "Ciudad Universitaria",
+    "option3": "Campus de Montegancedo",
+    "option4": "Calle Ramirez de Arellano",
+    "correctIndex": 1,
+    "category": "Buildings"
+  },
+  {
+    "text": "Approximately how many students does UPM have?",
+    "option1": "20,000",
+    "option2": "35,000",
+    "option3": "50,000",
+    "option4": "70,000",
+    "correctIndex": 1,
+    "category": "General"
+  },
+  {
+    "text": "In which international rankings does UPM regularly appear among Spain's top universities?",
+    "option1": "QS World University Rankings",
+    "option2": "Times Higher Education",
+    "option3": "Shanghai Ranking (ARWU)",
+    "option4": "All of the above",
+    "correctIndex": 3,
+    "category": "General"
+  },
+  {
+    "text": "What is the main language of instruction at UPM?",
+    "option1": "English",
+    "option2": "Spanish",
+    "option3": "Catalan",
+    "option4": "French",
+    "correctIndex": 1,
+    "category": "General"
+  },
+  {
+    "text": "What type of university is UPM?",
+    "option1": "Humanities university",
+    "option2": "Medical university",
+    "option3": "Technical university",
+    "option4": "Art school",
+    "correctIndex": 2,
+    "category": "General"
+  },
+  {
+    "text": "How many campus locations does UPM have in Madrid?",
+    "option1": "2",
+    "option2": "4",
+    "option3": "6",
+    "option4": "8",
+    "correctIndex": 1,
+    "category": "General"
+  },
+  {
+    "text": "Which research area is a key focus of UPM?",
+    "option1": "Philosophy",
+    "option2": "Engineering and Technology",
+    "option3": "Law",
+    "option4": "Sociology",
+    "correctIndex": 1,
+    "category": "General"
+  },
+  {
+    "text": "Does UPM have Erasmus partnerships with German universities?",
+    "option1": "Only TU Munich",
+    "option2": "Only RWTH Aachen",
+    "option3": "Multiple German universities",
+    "option4": "None",
+    "correctIndex": 2,
+    "category": "General"
+  }
+]

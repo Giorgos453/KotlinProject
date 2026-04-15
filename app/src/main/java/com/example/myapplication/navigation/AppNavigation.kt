@@ -12,6 +12,12 @@ import com.example.myapplication.ui.location.LocationScreen
 import com.example.myapplication.ui.location.LocationViewModel
 import com.example.myapplication.ui.map.MapScreen
 import com.example.myapplication.ui.map.MapViewModel
+import com.example.myapplication.ui.leaderboard.LeaderboardScreen
+import com.example.myapplication.ui.leaderboard.LeaderboardViewModel
+import com.example.myapplication.ui.profile.ProfileScreen
+import com.example.myapplication.ui.profile.ProfileViewModel
+import com.example.myapplication.ui.quiz.QuizScreen
+import com.example.myapplication.ui.quiz.QuizViewModel
 import com.example.myapplication.ui.weather.WeatherScreen
 import com.example.myapplication.ui.weather.WeatherViewModel
 
@@ -25,6 +31,9 @@ sealed class Screen(val route: String) {
     data object Location : Screen("location")
     data object Map : Screen("map")
     data object Weather : Screen("weather")
+    data object Quiz : Screen("quiz")
+    data object Leaderboard : Screen("leaderboard")
+    data object Profile : Screen("profile")
 }
 
 /**
@@ -40,6 +49,10 @@ fun AppNavHost(
     locationViewModelFactory: LocationViewModel.Factory,
     mapViewModelFactory: MapViewModel.Factory,
     weatherViewModelFactory: WeatherViewModel.Factory,
+    quizViewModelFactory: QuizViewModel.Factory,
+    leaderboardViewModelFactory: LeaderboardViewModel.Factory,
+    profileViewModelFactory: ProfileViewModel.Factory,
+    onLogout: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -71,6 +84,34 @@ fun AppNavHost(
         composable(Screen.Weather.route) {
             val weatherViewModel: WeatherViewModel = viewModel(factory = weatherViewModelFactory)
             WeatherScreen(viewModel = weatherViewModel)
+        }
+
+        composable(Screen.Quiz.route) {
+            val quizViewModel: QuizViewModel = viewModel(factory = quizViewModelFactory)
+            QuizScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                viewModel = quizViewModel
+            )
+        }
+
+        composable(Screen.Leaderboard.route) {
+            val leaderboardViewModel: LeaderboardViewModel = viewModel(factory = leaderboardViewModelFactory)
+            LeaderboardScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                viewModel = leaderboardViewModel
+            )
+        }
+
+        composable(Screen.Profile.route) {
+            val profileViewModel: ProfileViewModel = viewModel(factory = profileViewModelFactory)
+            ProfileScreen(
+                onLogout = onLogout,
+                viewModel = profileViewModel
+            )
         }
     }
 }

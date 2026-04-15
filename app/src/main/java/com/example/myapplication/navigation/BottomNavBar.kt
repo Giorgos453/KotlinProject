@@ -6,6 +6,8 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -55,6 +57,18 @@ enum class NavigationItem(
         label = "Weather",
         icon = Icons.Default.Star,
         accessibilityLabel = "Navigate to Weather"
+    ),
+    QUIZ(
+        route = Screen.Quiz.route,
+        label = "Quiz",
+        icon = Icons.Default.CheckCircle,
+        accessibilityLabel = "Navigate to Quiz"
+    ),
+    LEADERBOARD(
+        route = Screen.Leaderboard.route,
+        label = "Ranking",
+        icon = Icons.Default.ThumbUp,
+        accessibilityLabel = "Navigate to Leaderboard"
     )
 }
 

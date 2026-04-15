@@ -13,6 +13,8 @@ import com.example.myapplication.data.database.entity.CampusMarkerEntity
 import com.example.myapplication.data.database.entity.GpsCoordinateEntity
 import com.example.myapplication.data.database.entity.UserEntity
 import com.example.myapplication.data.database.entity.WeatherCacheEntity
+import com.example.myapplication.data.quiz.QuizQuestion
+import com.example.myapplication.data.quiz.QuizQuestionDao
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,9 +29,10 @@ import kotlinx.coroutines.launch
         GpsCoordinateEntity::class,
         CampusMarkerEntity::class,
         UserEntity::class,
-        WeatherCacheEntity::class
+        WeatherCacheEntity::class,
+        QuizQuestion::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -38,6 +41,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun campusMarkerDao(): CampusMarkerDao
     abstract fun userDao(): UserDao
     abstract fun weatherCacheDao(): WeatherCacheDao
+    abstract fun quizQuestionDao(): QuizQuestionDao
 
     companion object {
         @Volatile
