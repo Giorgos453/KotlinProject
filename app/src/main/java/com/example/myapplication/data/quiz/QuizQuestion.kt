@@ -17,5 +17,6 @@ data class QuizQuestion(
     @ColumnInfo(name = "option3") val option3: String,
     @ColumnInfo(name = "option4") val option4: String,
     @ColumnInfo(name = "correct_index") val correctIndex: Int,
-    @ColumnInfo(name = "category") val category: String
+    @ColumnInfo(name = "category") val category: String,
+    @ColumnInfo(name = "explanation") val explanation: String = ""
 )

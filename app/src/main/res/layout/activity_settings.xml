@@ -16,7 +16,7 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:navigationIconTint="@android:color/white" />
 
-    <!-- Fragment-Container unterhalb der Toolbar -->
+    <!-- Fragment container below the toolbar -->
     <FrameLayout
         android:id="@+id/settings_container"
         android:layout_width="match_parent"

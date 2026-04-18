@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Status-Anzeige: Ob ein Key gespeichert ist -->
+        <!-- Status indicator: whether a key is saved -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardStatus"
             android:layout_width="match_parent"
@@ -43,7 +43,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- User Identifier Eingabefeld -->
+        <!-- User identifier input field -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilUserIdentifier"
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="16dp" />
 
-        <!-- API-Key Eingabefeld mit Passwort-Toggle -->
+        <!-- API key input field with password toggle -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilApiKey"
             android:layout_width="match_parent"
@@ -90,7 +90,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Save-Button fuer beide Felder -->
+        <!-- Save button for both fields -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"
             android:layout_width="match_parent"

@@ -1,9 +1,9 @@
 package com.example.myapplication.data.csv
 
 /**
- * Datenmodell für einen GPS-Eintrag aus der CSV-Datei.
+ * Data model for a GPS entry from the CSV file.
  * Format: timestamp,latitude,longitude,altitude
- * Beispiel: 2026-03-26 14:30:00,48.2082,16.3738,171.0000
+ * Example: 2026-03-26 14:30:00,48.2082,16.3738,171.0000
  */
 data class GpsCoordinate(
     val timestamp: String,

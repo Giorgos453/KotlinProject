@@ -6,9 +6,9 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /**
- * Room-Entity fuer Benutzerprofile.
- * Ergaenzt SharedPreferences – strukturierte User-Daten werden in Room gespeichert.
- * Index auf name fuer schnelle Namenssuchen.
+ * Room entity for user profiles.
+ * Complements SharedPreferences — structured user data is stored in Room.
+ * Indexed on name for fast lookups.
  */
 @Entity(
     tableName = "users",

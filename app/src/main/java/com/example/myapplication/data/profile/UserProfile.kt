@@ -11,5 +11,14 @@ data class UserProfile(
     val totalScore: Int = 0,
     val quizzesCompleted: Int = 0,
     val stage: Int = 0,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    val xp: Int = 0,
+    val avatarStage: String = "SPROUT",
+    val currentLoginStreak: Int = 0,
+    val longestLoginStreak: Int = 0,
+    val totalQuizzesCompleted: Int = 0,
+    val visitedParkIds: String = "",
+    val avatarImageId: String = "",
+    val lastLoginDate: Long = 0L,
+    val lastQuizDate: Long = 0L
 )

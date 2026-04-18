@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1083062915592",
+    "firebase_url": "https://madtracking-b806a-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "madtracking-b806a",
+    "storage_bucket": "madtracking-b806a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083062915592:android:0369f2813f0c03bdf1f7bd",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083062915592-0ttinmpcktno7qde7pjafu58uvk5j15o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "c3d30c79ead8bf3aae13b15a3047c82ca6b93c54"
+          }
+        },
+        {
+          "client_id": "1083062915592-fhd4p57a3rvfs9e3610tl32go8t1q5uu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqwp3WMFJ-IFG2DxRZOxm6RgWh9PmAcd0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083062915592-fhd4p57a3rvfs9e3610tl32go8t1q5uu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

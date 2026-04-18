@@ -16,15 +16,15 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 /**
- * Fragment fuer die kombinierte Verwaltung von User Identifier und API-Key.
+ * Fragment for combined management of user identifier and API key.
  *
- * - userIdentifier: unverschluesselt in normalen SharedPreferences (PreferencesManager)
- * - apiKey: maskiert angezeigt, verschluesselt gespeichert (ApiKeyManager / EncryptedSharedPreferences)
+ * - userIdentifier: stored plaintext in regular SharedPreferences (PreferencesManager)
+ * - apiKey: shown masked, stored encrypted (ApiKeyManager / EncryptedSharedPreferences)
  *
- * Ein einzelner "Save"-Button speichert beide Werte gleichzeitig.
- * Nach dem Speichern: Snackbar-Bestaetigung, API-Key-Feld wieder maskiert.
+ * A single "Save" button persists both values at once.
+ * After saving: Snackbar confirmation; API key field is re-masked.
  *
- * SharedPreferences-Pfad im Device Explorer:
+ * SharedPreferences path in Device Explorer:
  * /data/data/es.upm.btb.helloworldkt/shared_prefs/
  */
 class ApiKeyFragment : Fragment() {
@@ -68,21 +68,21 @@ class ApiKeyFragment : Fragment() {
         btnSave = view.findViewById(R.id.btnSave)
     }
 
-    /** Laedt die aktuell gespeicherten Werte in die Felder */
+    /** Loads the currently stored values into the fields */
     private fun loadCurrentValues() {
-        // User Identifier aus normalen SharedPreferences laden
+        // load user identifier from regular SharedPreferences
         val currentName = preferencesManager.userName
         if (currentName != "User") {
             etUserIdentifier.setText(currentName)
         }
 
-        // API-Key: Feld leer lassen, nur Placeholder anzeigen wenn Key vorhanden
+        // API key: leave field blank, only show placeholder when a key is stored
         if (apiKeyManager.hasApiKey()) {
             tilApiKey.placeholderText = getString(R.string.api_key_placeholder)
         }
     }
 
-    /** Zeigt den aktuellen API-Key-Status an */
+    /** Displays the current API key status */
     private fun updateStatusDisplay() {
         if (apiKeyManager.hasApiKey()) {
             tvKeyStatus.text = getString(R.string.api_key_status_saved)
@@ -93,12 +93,12 @@ class ApiKeyFragment : Fragment() {
         }
     }
 
-    /** Ein Save-Button speichert beide Werte gleichzeitig */
+    /** Single save button persists both values at once */
     private fun setupSaveButton() {
         btnSave.setOnClickListener {
             var hasError = false
 
-            // User Identifier validieren
+            // validate user identifier
             val userName = etUserIdentifier.text?.toString()?.trim()
             if (userName.isNullOrBlank()) {
                 tilUserIdentifier.error = getString(R.string.pref_user_name_empty_error)
@@ -107,7 +107,7 @@ class ApiKeyFragment : Fragment() {
                 tilUserIdentifier.error = null
             }
 
-            // API-Key validieren (nur wenn ein neuer eingegeben wurde)
+            // validate API key (only when a new one is entered)
             val apiKeyInput = etApiKey.text?.toString()?.trim()
             if (!apiKeyInput.isNullOrEmpty()) {
                 val validation = ApiKeyManager.validateApiKey(apiKeyInput)
@@ -121,7 +121,7 @@ class ApiKeyFragment : Fragment() {
 
             if (hasError) return@setOnClickListener
 
-            // Beide Werte speichern
+            // save both values
             if (!userName.isNullOrBlank()) {
                 preferencesManager.userName = userName
                 AppLogger.i(TAG, "User identifier saved: $userName")
@@ -129,7 +129,7 @@ class ApiKeyFragment : Fragment() {
 
             if (!apiKeyInput.isNullOrEmpty()) {
                 apiKeyManager.saveApiKey(apiKeyInput)
-                // Feld leeren und maskieren nach Speichern
+                // clear and mask field after saving
                 etApiKey.text?.clear()
                 etApiKey.clearFocus()
                 tilApiKey.placeholderText = getString(R.string.api_key_placeholder)
@@ -137,7 +137,7 @@ class ApiKeyFragment : Fragment() {
 
             updateStatusDisplay()
 
-            // Snackbar-Bestaetigung
+            // Snackbar confirmation
             view?.let {
                 Snackbar.make(it, R.string.settings_saved_success, Snackbar.LENGTH_SHORT).show()
             }

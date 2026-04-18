@@ -7,6 +7,7 @@ import com.example.myapplication.data.leaderboard.LeaderboardEntry
  */
 data class LeaderboardUiState(
     val entries: List<LeaderboardEntry> = emptyList(),
+    val currentUserEntry: LeaderboardEntry? = null,
     val currentUserId: String? = null,
     val userRank: Int? = null,
     val isLoading: Boolean = true,

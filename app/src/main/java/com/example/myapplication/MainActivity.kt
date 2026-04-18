@@ -58,6 +58,11 @@ import com.example.myapplication.ui.map.MapViewModel
 import com.example.myapplication.ui.leaderboard.LeaderboardViewModel
 import com.example.myapplication.ui.profile.ProfileViewModel
 import com.example.myapplication.ui.quiz.QuizViewModel
+import com.example.myapplication.ui.airbuddy.AirQualityViewModel
+import com.example.myapplication.data.airquality.AirQualityRepository
+import com.example.myapplication.data.airbuddy.TreeStateRepository
+import com.example.myapplication.data.airbuddy.TreeScoreManager
+import com.example.myapplication.ui.home.HomeViewModel
 import com.example.myapplication.ui.settings.SettingsActivity
 import com.example.myapplication.ui.weather.WeatherViewModel
 import com.example.myapplication.ui.theme.MyApplicationTheme
@@ -74,6 +79,9 @@ class MainActivity : ComponentActivity() {
     private lateinit var quizViewModelFactory: QuizViewModel.Factory
     private lateinit var leaderboardViewModelFactory: LeaderboardViewModel.Factory
     private lateinit var profileViewModelFactory: ProfileViewModel.Factory
+    private lateinit var airQualityViewModelFactory: AirQualityViewModel.Factory
+    private lateinit var homeViewModelFactory: HomeViewModel.Factory
+    private lateinit var treeScoreManager: TreeScoreManager
     private lateinit var preferencesManager: PreferencesManager
     private lateinit var userRepository: UserRepository
     private val authRepository = AuthRepository()
@@ -87,7 +95,7 @@ class MainActivity : ComponentActivity() {
 
         preferencesManager = PreferencesManager(applicationContext)
 
-        // Room-Datenbank und Repositories initialisieren
+        // initialize Room database and repositories
         val database = AppDatabase.getInstance(applicationContext)
         val gpsRepository = GpsCoordinateRepository(database.locationDao())
         val campusMarkerRepository = CampusMarkerRepository(database.campusMarkerDao())
@@ -95,14 +103,12 @@ class MainActivity : ComponentActivity() {
 
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val locationRepository = LocationRepository(fusedLocationClient)
-        // LocationViewModel nutzt jetzt GpsCoordinateRepository statt Context fuer CSV
+        // LocationViewModel now uses GpsCoordinateRepository instead of Context for CSV
         locationViewModelFactory = LocationViewModel.Factory(locationRepository, gpsRepository)
 
         val geocodingRepository = GeocodingRepository(this)
-        // MapViewModel nutzt jetzt CampusMarkerRepository statt statische CampusTourData
-        mapViewModelFactory = MapViewModel.Factory(locationRepository, geocodingRepository, campusMarkerRepository)
 
-        // Weather: Repository und ViewModel-Factory erstellen
+        // Weather: create repository and ViewModel factory
         val apiKeyManager = ApiKeyManager.getInstance(applicationContext)
         val weatherRepository = WeatherRepository(
             remoteDataSource = WeatherRemoteDataSource(),
@@ -123,10 +129,34 @@ class MainActivity : ComponentActivity() {
 
         // Profile repository needed for quiz score updates
         val profileRepository = ProfileRepository(FirebaseDatabase.getInstance())
-        profileViewModelFactory = ProfileViewModel.Factory(profileRepository, currentUserId)
+
+        // Air quality and tree growth system
+        val airQualityRepository = AirQualityRepository()
+        airQualityViewModelFactory = AirQualityViewModel.Factory(airQualityRepository, locationRepository, applicationContext)
+
+        val treeStateRepository = TreeStateRepository(FirebaseDatabase.getInstance(), quizDatabase.treeStateDao())
+        profileViewModelFactory = ProfileViewModel.Factory(
+            profileRepository,
+            treeStateRepository,
+            currentUserId,
+            preferencesManager,
+            applicationContext
+        )
+        treeScoreManager = TreeScoreManager(treeStateRepository, airQualityRepository)
+        homeViewModelFactory = HomeViewModel.Factory(treeStateRepository, treeScoreManager, currentUserId)
+
+        // MapViewModel needs tree state + score manager to support park check-ins
+        mapViewModelFactory = MapViewModel.Factory(
+            locationRepository,
+            geocodingRepository,
+            campusMarkerRepository,
+            treeStateRepository,
+            treeScoreManager,
+            currentUserId
+        )
 
         quizViewModelFactory = QuizViewModel.Factory(
-            quizRepository, leaderboardRepository, profileRepository, currentUserId, currentNickname
+            quizRepository, leaderboardRepository, profileRepository, treeScoreManager, currentUserId, currentNickname
         )
         leaderboardViewModelFactory = LeaderboardViewModel.Factory(leaderboardRepository, currentUserId)
 
@@ -138,7 +168,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        // API-Key-Check: Falls kein Key vorhanden, direkt zu Settings navigieren
+        // API key check: if no key is stored, navigate directly to Settings
         if (!apiKeyManager.hasApiKey()) {
             AppLogger.i(TAG, "No API key found – redirecting to Settings")
             startActivity(SettingsActivity.newIntent(this))
@@ -225,6 +255,9 @@ class MainActivity : ComponentActivity() {
                                     restoreState = true
                                 }
                             },
+                            onSettingsClick = {
+                                startActivity(SettingsActivity.newIntent(this@MainActivity))
+                            },
                             onCloseDrawer = { scope.launch { drawerState.close() } }
                         )
                     }
@@ -279,13 +312,26 @@ class MainActivity : ComponentActivity() {
                                 saveUserToDatabase(name)
                                 userName = name
                             },
+                            onNavigate = { route ->
+                                navController.navigate(route) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
                             locationViewModelFactory = locationViewModelFactory,
                             mapViewModelFactory = mapViewModelFactory,
                             weatherViewModelFactory = weatherViewModelFactory,
                             quizViewModelFactory = quizViewModelFactory,
                             leaderboardViewModelFactory = leaderboardViewModelFactory,
                             profileViewModelFactory = profileViewModelFactory,
+                            airQualityViewModelFactory = airQualityViewModelFactory,
+                            homeViewModelFactory = homeViewModelFactory,
+                            treeScoreManager = treeScoreManager,
                             onLogout = { performLogout() },
+                            onOpenSettings = { startActivity(SettingsActivity.newIntent(this@MainActivity)) },
                             modifier = Modifier.padding(innerPadding)
                         )
                     }
@@ -329,7 +375,7 @@ class MainActivity : ComponentActivity() {
         finish()
     }
 
-    /** Speichert den Benutzernamen parallel in der Room-Datenbank */
+    /** Persists the username in the Room database in parallel */
     private fun saveUserToDatabase(name: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {

@@ -8,11 +8,6 @@ import com.example.myapplication.R
 import com.example.myapplication.util.AppLogger
 import com.google.android.material.appbar.MaterialToolbar
 
-/**
- * Container-Activity für das SettingsFragment.
- * Nutzt eigenes Layout mit Toolbar + Fragment-Container,
- * damit die Toolbar den Inhalt nicht überdeckt.
- */
 class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,11 +15,10 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
         AppLogger.i(TAG, "onCreate")
 
-        // Toolbar als ActionBar setzen und Zurück-Pfeil aktivieren
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.setNavigationOnClickListener { finish() }
 
-        // Fragment in den Container laden (nicht bei Rotation)
+        // only load fragment on first create, not on rotation
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
@@ -36,7 +30,6 @@ class SettingsActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "SettingsActivity"
 
-        /** Factory-Methode für typsicheren Intent-Aufruf */
         fun newIntent(context: Context): Intent {
             return Intent(context, SettingsActivity::class.java)
         }

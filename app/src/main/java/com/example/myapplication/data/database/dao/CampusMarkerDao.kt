@@ -9,7 +9,7 @@ import com.example.myapplication.data.database.entity.CampusMarkerEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
- * DAO fuer Campus-Marker – CRUD-Operationen fuer Tour-Stops.
+ * DAO for campus markers — CRUD operations on tour stops.
  */
 @Dao
 interface CampusMarkerDao {

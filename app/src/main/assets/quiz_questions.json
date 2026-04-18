@@ -1,254 +1,502 @@
 [
   {
-    "text": "In what year was UPM officially founded?",
-    "option1": "1968",
-    "option2": "1971",
-    "option3": "1975",
-    "option4": "1980",
+    "text": "What is the main source of NO2 emissions in Madrid?",
+    "option1": "Industry",
+    "option2": "Road traffic",
+    "option3": "Heating systems",
+    "option4": "Agriculture",
     "correctIndex": 1,
-    "category": "UPM History"
+    "category": "RED",
+    "explanation": "Road traffic is the largest NO2 emitter in Madrid."
   },
   {
-    "text": "How was UPM formed?",
-    "option1": "Split from Universidad de Alcala",
-    "option2": "Founded by Universidad Complutense",
-    "option3": "Evolved from Instituto Politecnico Superior",
-    "option4": "Merger of several technical schools in Madrid",
-    "correctIndex": 3,
-    "category": "UPM History"
+    "text": "What does the abbreviation PM2.5 stand for?",
+    "option1": "Particle Meter 2.5",
+    "option2": "Particulate matter with max. 2.5 \u00b5m diameter",
+    "option3": "Pollen 2.5",
+    "option4": "Power Meter 2.5",
+    "correctIndex": 1,
+    "category": "RED",
+    "explanation": "PM2.5 refers to fine particulate matter with a diameter of 2.5 micrometers or less."
   },
   {
-    "text": "Approximately how many Escuelas and faculties does UPM have?",
-    "option1": "8",
-    "option2": "12",
-    "option3": "21",
-    "option4": "30",
-    "correctIndex": 2,
-    "category": "UPM History"
-  },
-  {
-    "text": "Who was the first rector of UPM?",
-    "option1": "Jose Antonio de Artigas",
-    "option2": "Guillermo Cisneros",
-    "option3": "Carlos Conde",
-    "option4": "Rafael Portaencasa",
+    "text": "What measure did Madrid introduce in 2018 for cleaner air?",
+    "option1": "Madrid Central",
+    "option2": "Madrid Verde",
+    "option3": "Madrid Open",
+    "option4": "Madrid Aire",
     "correctIndex": 0,
-    "category": "UPM History"
+    "category": "RED",
+    "explanation": "Madrid Central was a low-emission zone in the city center, later replaced by Madrid 360."
   },
   {
-    "text": "Which is the oldest school of UPM, founded in 1802?",
-    "option1": "ETSI Caminos",
-    "option2": "ETSI Industriales",
-    "option3": "ETSI Minas",
-    "option4": "ETSI Navales",
+    "text": "Which value is considered \"good\" air quality on the European AQI scale?",
+    "option1": "0-20",
+    "option2": "20-50",
+    "option3": "50-80",
+    "option4": "80-100",
     "correctIndex": 0,
-    "category": "UPM History"
+    "category": "RED",
+    "explanation": "Values 0-20 correspond to the best level \"Good\" on the European AQI."
   },
   {
-    "text": "In which district of Madrid is Campus Sur located?",
-    "option1": "Moncloa",
-    "option2": "Vallecas",
-    "option3": "Chamartin",
-    "option4": "Arganzuela",
+    "text": "Which pollutant is mainly formed by sunlight in the atmosphere?",
+    "option1": "PM10",
+    "option2": "Ozone (O3)",
+    "option3": "SO2",
+    "option4": "CO",
     "correctIndex": 1,
-    "category": "Campus Sur"
+    "category": "RED",
+    "explanation": "Ground-level ozone is formed through photochemical reactions under UV radiation."
   },
   {
-    "text": "Which Escuela is located on Campus Sur?",
-    "option1": "ETSI Aeronauticos",
-    "option2": "ETSISI",
-    "option3": "ETSI Caminos",
-    "option4": "ETSI Industriales",
-    "correctIndex": 1,
-    "category": "Campus Sur"
-  },
-  {
-    "text": "Which metro station is closest to Campus Sur?",
-    "option1": "Ciudad Universitaria",
-    "option2": "Sierra de Guadalupe",
-    "option3": "Nuevos Ministerios",
-    "option4": "Atocha",
-    "correctIndex": 1,
-    "category": "Campus Sur"
-  },
-  {
-    "text": "Which sports facility is located on Campus Sur?",
-    "option1": "Swimming pool",
-    "option2": "Tennis courts",
-    "option3": "Outdoor futsal courts",
-    "option4": "Athletics track",
+    "text": "When is air quality in Madrid typically at its worst?",
+    "option1": "Early morning",
+    "option2": "Noon",
+    "option3": "Rush hour",
+    "option4": "Night",
     "correctIndex": 2,
-    "category": "Campus Sur"
+    "category": "RED",
+    "explanation": "During morning and evening rush hours, pollutant levels are at their highest."
   },
   {
-    "text": "Which other Escuela is located alongside ETSISI on Campus Sur?",
-    "option1": "ETSIAE",
-    "option2": "ETSIST",
-    "option3": "ETSII",
-    "option4": "ETSAM",
-    "correctIndex": 1,
-    "category": "Campus Sur"
-  },
-  {
-    "text": "What does the abbreviation ETSISI stand for?",
-    "option1": "Escuela Tecnica Superior de Ingenieria de Sistemas Informaticos",
-    "option2": "Escuela Tecnica Superior de Informatica y Sistemas Integrados",
-    "option3": "Escuela Tecnica de Software e Ingenieria de Sistemas",
-    "option4": "Escuela Tecnica Superior de Inteligencia y Sistemas",
+    "text": "What is sulfur dioxide (SO2) primarily?",
+    "option1": "A combustion product of fossil fuels",
+    "option2": "A plant-based gas",
+    "option3": "Water vapor",
+    "option4": "An oxygen variant",
     "correctIndex": 0,
-    "category": "Faculties"
+    "category": "RED",
+    "explanation": "SO2 is mainly produced by burning sulfur-containing fossil fuels."
   },
   {
-    "text": "Which faculty is responsible for architecture?",
-    "option1": "ETSI Industriales",
-    "option2": "ETSAM",
-    "option3": "ETSI Caminos",
-    "option4": "ETSI Montes",
-    "correctIndex": 1,
-    "category": "Faculties"
-  },
-  {
-    "text": "What does ETSIST stand for?",
-    "option1": "Escuela de Sistemas y Telecomunicaciones",
-    "option2": "Escuela Tecnica Superior de Ingenieria y Sistemas de Telecomunicacion",
-    "option3": "Escuela de Tecnologia de Sistemas Telematicos",
-    "option4": "Escuela Tecnica de Senales y Telecomunicacion",
-    "correctIndex": 1,
-    "category": "Faculties"
-  },
-  {
-    "text": "Which Escuela trains aerospace engineers?",
-    "option1": "ETSISI",
-    "option2": "ETSII",
-    "option3": "ETSIAE",
-    "option4": "ETSAM",
+    "text": "Which European AQI value means \"Very poor\"?",
+    "option1": "40-60",
+    "option2": "60-80",
+    "option3": "80-100",
+    "option4": "Over 100",
     "correctIndex": 2,
-    "category": "Faculties"
+    "category": "RED",
+    "explanation": "AQI values between 80 and 100 are classified as \"Very poor\"."
   },
   {
-    "text": "At which Escuela do you study civil engineering?",
-    "option1": "ETSI Caminos, Canales y Puertos",
-    "option2": "ETSAM",
-    "option3": "ETSI Industriales",
-    "option4": "ETSI Minas y Energia",
+    "text": "Which factor worsens air quality in Madrid during summer?",
+    "option1": "Heavy rain",
+    "option2": "Low wind and high temperatures",
+    "option3": "Low population density",
+    "option4": "Snowfall",
+    "correctIndex": 1,
+    "category": "RED",
+    "explanation": "In summer, air often stagnates over Madrid due to weak winds and heat."
+  },
+  {
+    "text": "What does the European AQI measure?",
+    "option1": "Only fine dust",
+    "option2": "Only ozone",
+    "option3": "Multiple pollutants combined",
+    "option4": "Only NO2",
+    "correctIndex": 2,
+    "category": "RED",
+    "explanation": "The European AQI considers PM2.5, PM10, NO2, O3 and SO2."
+  },
+  {
+    "text": "Which type of vehicle pollutes Madrid's air the most?",
+    "option1": "Bicycles",
+    "option2": "Diesel vehicles",
+    "option3": "Electric cars",
+    "option4": "Pedestrians",
+    "correctIndex": 1,
+    "category": "RED",
+    "explanation": "Diesel vehicles are the main contributors of NO2 and particulate matter."
+  },
+  {
+    "text": "What is the main source of PM10 in Madrid?",
+    "option1": "Traffic and construction",
+    "option2": "Forests",
+    "option3": "The sea",
+    "option4": "Mining",
     "correctIndex": 0,
-    "category": "Faculties"
+    "category": "RED",
+    "explanation": "Traffic, construction activity and Saharan dust contribute the most to PM10."
   },
   {
-    "text": "Which faculty is responsible for forestry sciences?",
-    "option1": "ETSI Agronomos",
-    "option2": "ETSI Montes, Forestal y del Medio Natural",
-    "option3": "ETSI Caminos",
-    "option4": "ETSI Navales",
+    "text": "Which event regularly worsens Madrid's air in spring?",
+    "option1": "Snowfall",
+    "option2": "Saharan dust clouds",
+    "option3": "Volcanic eruptions",
+    "option4": "Earthquakes",
     "correctIndex": 1,
-    "category": "Faculties"
+    "category": "RED",
+    "explanation": "Saharan dust from North Africa regularly raises PM10 levels."
   },
   {
-    "text": "Where is the UPM rectorate located?",
-    "option1": "Campus Sur",
-    "option2": "Campus de Montegancedo",
-    "option3": "Ciudad Universitaria",
-    "option4": "Calle Ramiro de Maeztu",
-    "correctIndex": 3,
-    "category": "Buildings"
+    "text": "Which area of Madrid typically has the worst air quality?",
+    "option1": "Outskirts",
+    "option2": "City center",
+    "option3": "Casa de Campo",
+    "option4": "Sierra de Madrid",
+    "correctIndex": 1,
+    "category": "RED",
+    "explanation": "The traffic-heavy city center has the highest pollutant levels."
   },
   {
-    "text": "Which historic building houses ETSI Industriales?",
-    "option1": "Palacio de las Comunicaciones",
-    "option2": "Edificio A at Ciudad Universitaria",
-    "option3": "Building on Calle Jose Gutierrez Abascal",
-    "option4": "Edificio Torres Blancas",
+    "text": "What is Madrid 360?",
+    "option1": "A park",
+    "option2": "The current low-emission zone strategy",
+    "option3": "An app",
+    "option4": "A stadium",
+    "correctIndex": 1,
+    "category": "RED",
+    "explanation": "Madrid 360 is the city's current strategy for clean air and traffic calming."
+  },
+  {
+    "text": "Which time of day often has the best air quality in Madrid?",
+    "option1": "Rush hour",
+    "option2": "Noon",
+    "option3": "Early morning hours before traffic",
+    "option4": "Evening at 6 PM",
     "correctIndex": 2,
-    "category": "Buildings"
+    "category": "RED",
+    "explanation": "Before rush hour traffic, pollutant levels are at their lowest."
   },
   {
-    "text": "On which campus is CESVIMA (Supercomputing Center) located?",
-    "option1": "Campus Sur",
-    "option2": "Campus de Montegancedo",
-    "option3": "Ciudad Universitaria",
-    "option4": "Campus de Getafe",
+    "text": "Which unit is used for particulate matter concentration?",
+    "option1": "km/h",
+    "option2": "\u00b5g/m\u00b3 (micrograms per cubic meter)",
+    "option3": "Degrees Celsius",
+    "option4": "dB",
     "correctIndex": 1,
-    "category": "Buildings"
+    "category": "RED",
+    "explanation": "Particulate matter concentrations are measured in micrograms per cubic meter of air."
   },
   {
-    "text": "Which building on Campus Sur houses the library?",
-    "option1": "Edificio A",
-    "option2": "Edificio C",
-    "option3": "Edificio Central",
-    "option4": "Edificio B",
-    "correctIndex": 3,
-    "category": "Buildings"
-  },
-  {
-    "text": "Where is the ETSI Aeronauticos (ETSIAE) located?",
-    "option1": "Campus Sur",
-    "option2": "Ciudad Universitaria",
-    "option3": "Campus de Montegancedo",
-    "option4": "Calle Ramirez de Arellano",
-    "correctIndex": 1,
-    "category": "Buildings"
-  },
-  {
-    "text": "Approximately how many students does UPM have?",
-    "option1": "20,000",
-    "option2": "35,000",
-    "option3": "50,000",
-    "option4": "70,000",
-    "correctIndex": 1,
-    "category": "General"
-  },
-  {
-    "text": "In which international rankings does UPM regularly appear among Spain's top universities?",
-    "option1": "QS World University Rankings",
-    "option2": "Times Higher Education",
-    "option3": "Shanghai Ranking (ARWU)",
-    "option4": "All of the above",
-    "correctIndex": 3,
-    "category": "General"
-  },
-  {
-    "text": "What is the main language of instruction at UPM?",
-    "option1": "English",
-    "option2": "Spanish",
-    "option3": "Catalan",
-    "option4": "French",
-    "correctIndex": 1,
-    "category": "General"
-  },
-  {
-    "text": "What type of university is UPM?",
-    "option1": "Humanities university",
-    "option2": "Medical university",
-    "option3": "Technical university",
-    "option4": "Art school",
+    "text": "Which group of people is particularly sensitive to air pollution?",
+    "option1": "Young adults",
+    "option2": "Athletes",
+    "option3": "Children and elderly people",
+    "option4": "Middle-aged group",
     "correctIndex": 2,
-    "category": "General"
+    "category": "YELLOW",
+    "explanation": "Children and seniors are more sensitive to poor air quality."
   },
   {
-    "text": "How many campus locations does UPM have in Madrid?",
-    "option1": "2",
-    "option2": "4",
-    "option3": "6",
-    "option4": "8",
+    "text": "Which disease is promoted by particulate matter exposure?",
+    "option1": "Asthma",
+    "option2": "Diabetes",
+    "option3": "Migraine",
+    "option4": "Nut allergy",
+    "correctIndex": 0,
+    "category": "YELLOW",
+    "explanation": "Particulate matter can trigger asthma attacks and worsen chronic respiratory diseases."
+  },
+  {
+    "text": "What happens to PM2.5 after inhalation?",
+    "option1": "It is exhaled",
+    "option2": "It stays in the nose",
+    "option3": "It penetrates deep into the lungs",
+    "option4": "It goes to the stomach",
+    "correctIndex": 2,
+    "category": "YELLOW",
+    "explanation": "PM2.5 is small enough to penetrate deep into the lung alveoli."
+  },
+  {
+    "text": "Which pollen is particularly common in Madrid's spring?",
+    "option1": "Pine",
+    "option2": "Olive and grasses",
+    "option3": "Tulip",
+    "option4": "Rose",
     "correctIndex": 1,
-    "category": "General"
+    "category": "YELLOW",
+    "explanation": "Olive trees and grasses cause high pollen concentrations in spring."
   },
   {
-    "text": "Which research area is a key focus of UPM?",
-    "option1": "Philosophy",
-    "option2": "Engineering and Technology",
-    "option3": "Law",
-    "option4": "Sociology",
+    "text": "What should sensitive people do when AQI is above 60?",
+    "option1": "Change nothing",
+    "option2": "Do more outdoor sports",
+    "option3": "Reduce strenuous outdoor activities",
+    "option4": "Take longer walks",
+    "correctIndex": 2,
+    "category": "YELLOW",
+    "explanation": "With moderate to poor air quality, sensitive people should avoid outdoor exertion."
+  },
+  {
+    "text": "What is a long-term effect of NO2 exposure?",
+    "option1": "Better lung function",
+    "option2": "Reduced lung function",
+    "option3": "Stronger immune system",
+    "option4": "More energy",
     "correctIndex": 1,
-    "category": "General"
+    "category": "YELLOW",
+    "explanation": "Chronic NO2 exposure reduces lung function over time."
   },
   {
-    "text": "Does UPM have Erasmus partnerships with German universities?",
-    "option1": "Only TU Munich",
-    "option2": "Only RWTH Aachen",
-    "option3": "Multiple German universities",
+    "text": "Which pollutant particularly irritates airways during exercise?",
+    "option1": "CO2",
+    "option2": "Ground-level ozone",
+    "option3": "Nitrogen",
+    "option4": "Water vapor",
+    "correctIndex": 1,
+    "category": "YELLOW",
+    "explanation": "Ozone can be inhaled deeply during exercise and damage airways."
+  },
+  {
+    "text": "What helps with poor air quality at home?",
+    "option1": "Keep windows open all the time",
+    "option2": "Air purifier and closed windows",
+    "option3": "Light candles",
+    "option4": "Smoke more",
+    "correctIndex": 1,
+    "category": "YELLOW",
+    "explanation": "Air purifiers with HEPA filters and closed windows reduce indoor pollutant levels."
+  },
+  {
+    "text": "Which sport is most unfavorable during poor air quality?",
+    "option1": "Indoor yoga",
+    "option2": "Jogging along main roads",
+    "option3": "Swimming in an indoor pool",
+    "option4": "Indoor weight training",
+    "correctIndex": 1,
+    "category": "YELLOW",
+    "explanation": "Jogging along main roads significantly increases pollutant intake."
+  },
+  {
+    "text": "How many premature deaths per year in the EU are attributed to air pollution?",
+    "option1": "A few thousand",
+    "option2": "About 30,000",
+    "option3": "Over 300,000",
     "option4": "None",
     "correctIndex": 2,
-    "category": "General"
+    "category": "YELLOW",
+    "explanation": "The EEA estimates over 300,000 premature deaths annually in the EU from air pollution."
+  },
+  {
+    "text": "Which organ besides the lungs is particularly affected by particulate matter?",
+    "option1": "Pancreas",
+    "option2": "Heart and cardiovascular system",
+    "option3": "Knees",
+    "option4": "Eyes",
+    "correctIndex": 1,
+    "category": "YELLOW",
+    "explanation": "Particulate matter increases the risk of heart attacks and strokes."
+  },
+  {
+    "text": "When are children particularly vulnerable to air pollution?",
+    "option1": "While sleeping",
+    "option2": "While playing outdoors in heavily polluted areas",
+    "option3": "While reading",
+    "option4": "While eating",
+    "correctIndex": 1,
+    "category": "YELLOW",
+    "explanation": "While playing, children breathe in more air and are directly exposed to pollutants."
+  },
+  {
+    "text": "What is a short-term effect of high ozone levels?",
+    "option1": "Better visibility",
+    "option2": "Irritation of airways and eyes",
+    "option3": "Less fatigue",
+    "option4": "Better concentration",
+    "correctIndex": 1,
+    "category": "YELLOW",
+    "explanation": "Ground-level ozone irritates mucous membranes and can cause coughing and burning eyes."
+  },
+  {
+    "text": "How can you improve indoor air in spring when pollen is flying?",
+    "option1": "Constant ventilation",
+    "option2": "Ventilate early morning and use pollen filters",
+    "option3": "Never ventilate",
+    "option4": "Incense sticks",
+    "correctIndex": 1,
+    "category": "YELLOW",
+    "explanation": "Fewer pollen fly in early morning, and pollen filters reduce the exposure."
+  },
+  {
+    "text": "Which population group in Madrid is most affected by respiratory diseases?",
+    "option1": "Tourists",
+    "option2": "Residents of busy inner-city neighborhoods",
+    "option3": "Mountain climbers",
+    "option4": "Construction workers in the outskirts",
+    "correctIndex": 1,
+    "category": "YELLOW",
+    "explanation": "Residents near heavily trafficked streets have significantly higher rates of respiratory diseases."
+  },
+  {
+    "text": "Which test measures lung function?",
+    "option1": "ECG",
+    "option2": "Spirometry",
+    "option3": "Blood test",
+    "option4": "X-ray",
+    "correctIndex": 1,
+    "category": "YELLOW",
+    "explanation": "Spirometry is the standard test for measuring lung function."
+  },
+  {
+    "text": "Which park is the \"green lung\" of Madrid?",
+    "option1": "Parque del Retiro",
+    "option2": "Plaza Mayor",
+    "option3": "Gran Via",
+    "option4": "Sol",
+    "correctIndex": 0,
+    "category": "GREEN",
+    "explanation": "Parque del Retiro with over 15,000 trees is Madrid's most famous green oasis."
+  },
+  {
+    "text": "Which is the largest park in Madrid?",
+    "option1": "Retiro",
+    "option2": "Casa de Campo",
+    "option3": "Madrid Rio",
+    "option4": "Parque del Oeste",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Casa de Campo at over 1,700 hectares is five times larger than Central Park."
+  },
+  {
+    "text": "How much CO2 does an average urban tree absorb per year?",
+    "option1": "1 kg",
+    "option2": "About 10-25 kg",
+    "option3": "Over 1 ton",
+    "option4": "Nothing at all",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Urban trees capture about 10-25 kg of CO2 annually, depending on species and size."
+  },
+  {
+    "text": "What effect do trees have in the city during summer?",
+    "option1": "More heat",
+    "option2": "Cooling through evaporation and shade",
+    "option3": "Drought",
+    "option4": "More noise",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Trees cool their surroundings by several degrees through shade and transpiration."
+  },
+  {
+    "text": "What is Madrid Rio?",
+    "option1": "A river",
+    "option2": "A green space along the Manzanares",
+    "option3": "A restaurant",
+    "option4": "A museum",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Madrid Rio is a modern green space along the renaturalized Manzanares River."
+  },
+  {
+    "text": "Which tree species is typical for Madrid's streets?",
+    "option1": "Palm tree",
+    "option2": "Plane tree",
+    "option3": "Birch",
+    "option4": "Pine",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Plane trees are the most common street trees in Madrid, very resilient to urban conditions."
+  },
+  {
+    "text": "How can you personally improve air quality in Madrid?",
+    "option1": "Drive more",
+    "option2": "Use public transport, bike or walk",
+    "option3": "Heat constantly",
+    "option4": "Light candles",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Driving less directly reduces NO2 and particulate matter emissions."
+  },
+  {
+    "text": "Which effect of trees directly helps against air pollution?",
+    "option1": "Noise",
+    "option2": "Filtering particulate matter through leaves",
+    "option3": "More shade",
+    "option4": "More beauty",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Leaves and bark mechanically capture particulate matter particles from the air."
+  },
+  {
+    "text": "Which Madrid project is planting one million trees?",
+    "option1": "Bosque Metropolitano",
+    "option2": "Madrid Plant",
+    "option3": "Eco Madrid",
+    "option4": "Verde 2030",
+    "correctIndex": 0,
+    "category": "GREEN",
+    "explanation": "The Bosque Metropolitano aims to surround Madrid with a 75 km forest ring."
+  },
+  {
+    "text": "Which houseplant is particularly good for air purification?",
+    "option1": "Cactus",
+    "option2": "Pothos or peace lily",
+    "option3": "Tulip",
+    "option4": "Succulent",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Pothos and peace lilies filter pollutants from indoor air particularly effectively."
+  },
+  {
+    "text": "Which tip helps on days with poor air quality?",
+    "option1": "Constant ventilation",
+    "option2": "Jogging on main roads",
+    "option3": "Keep windows closed and stay indoors",
+    "option4": "More candles",
+    "correctIndex": 2,
+    "category": "GREEN",
+    "explanation": "When AQI values are high, windows should stay closed and outdoor activities should be reduced."
+  },
+  {
+    "text": "What does the \"Urban Heat Island Effect\" mean?",
+    "option1": "Islands in the sea",
+    "option2": "Cities are warmer than their surroundings",
+    "option3": "Heat islands in the garden",
+    "option4": "Heat in houses",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Sealed surfaces and lack of greenery make cities significantly warmer than surrounding areas."
+  },
+  {
+    "text": "Which action improves urban air quality most directly?",
+    "option1": "More cars",
+    "option2": "More trees and parks",
+    "option3": "More concrete",
+    "option4": "More advertising",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Trees and parks filter pollutants and cool the city at the same time."
+  },
+  {
+    "text": "Which Madrid park is located in the north of the city?",
+    "option1": "Retiro",
+    "option2": "Parque Juan Carlos I",
+    "option3": "Casa de Campo",
+    "option4": "Madrid Rio",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Parque Juan Carlos I is located in the northeastern area of Madrid near IFEMA."
+  },
+  {
+    "text": "How can you save energy at home and reduce emissions?",
+    "option1": "Keep all lights on permanently",
+    "option2": "Use heating and AC efficiently",
+    "option3": "Leave devices on standby",
+    "option4": "Heat with open windows",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Efficient use of heating and AC reduces energy demand and therefore emissions."
+  },
+  {
+    "text": "Which green solution is common on Madrid buildings?",
+    "option1": "Green roofs and vertical gardens",
+    "option2": "Plastic plants",
+    "option3": "Parking decks",
+    "option4": "Bus stops",
+    "correctIndex": 0,
+    "category": "GREEN",
+    "explanation": "Green roofs and vertical gardens are modern solutions for more greenery in dense cities."
+  },
+  {
+    "text": "What can you do as a Madrid resident for more urban greenery?",
+    "option1": "Nothing",
+    "option2": "Balcony plants, tree sponsorships or green initiatives",
+    "option3": "Drive more",
+    "option4": "Seal more surfaces",
+    "correctIndex": 1,
+    "category": "GREEN",
+    "explanation": "Even small contributions like balcony greening or tree sponsorships help the city."
   }
 ]

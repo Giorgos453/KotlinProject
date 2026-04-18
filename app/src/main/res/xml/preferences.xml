@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Profil & API-Konfiguration (kombiniert) -->
+    <!-- Profile -->
+    <PreferenceCategory
+        app:key="category_profile"
+        app:title="@string/pref_category_profile">
+
+        <EditTextPreference
+            app:key="user_id"
+            app:title="@string/pref_user_name_title"
+            app:summary="@string/pref_user_name_summary"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <!-- Profile & API configuration (combined) -->
     <PreferenceCategory
         app:key="category_profile_api"
         app:title="@string/pref_category_profile_api">
@@ -12,7 +24,7 @@
             app:summary="@string/pref_profile_api_summary" />
     </PreferenceCategory>
 
-    <!-- Location-Einstellungen -->
+    <!-- Location settings -->
     <PreferenceCategory
         app:key="category_location"
         app:title="@string/pref_category_location">
@@ -33,7 +45,7 @@
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
-    <!-- Map-Einstellungen -->
+    <!-- Map settings -->
     <PreferenceCategory
         app:key="category_map"
         app:title="@string/pref_category_map">
@@ -48,7 +60,7 @@
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
-    <!-- Darstellung -->
+    <!-- Appearance -->
     <PreferenceCategory
         app:key="category_appearance"
         app:title="@string/pref_category_appearance">

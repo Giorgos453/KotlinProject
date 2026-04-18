@@ -5,12 +5,12 @@ import es.upm.btb.helloworldkt.persistence.room.LocationEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Repository fuer GPS-Koordinaten – kapselt alle DAO-Zugriffe.
- * ViewModel greift niemals direkt auf den DAO zu, nur ueber das Repository.
+ * Repository for GPS coordinates — wraps all DAO access.
+ * ViewModel never accesses the DAO directly, always through the repository.
  */
 class GpsCoordinateRepository(private val dao: LocationDao) {
 
-    /** Alle GPS-Koordinaten als Flow – UI aktualisiert sich automatisch */
+    /** All GPS coordinates as a Flow — UI updates automatically */
     val allCoordinates: Flow<List<LocationEntity>> = dao.getAll()
 
     suspend fun insert(coordinate: LocationEntity) = dao.insert(coordinate)

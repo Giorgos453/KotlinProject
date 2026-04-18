@@ -9,7 +9,7 @@ import com.example.myapplication.data.database.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
- * DAO fuer Benutzer – CRUD-Operationen fuer User-Profile.
+ * DAO for users — CRUD operations on user profiles.
  */
 @Dao
 interface UserDao {

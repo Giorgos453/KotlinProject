@@ -1,15 +1,15 @@
 package com.example.myapplication.data.preferences
 
 /**
- * Zentrale Definition aller SharedPreference-Keys und Default-Werte.
- * Keine Magic Strings – alle Zugriffe referenzieren diese Konstanten.
+ * Central definition of all SharedPreference keys and default values.
+ * No magic strings — all access sites reference these constants.
  */
 object PreferenceKeys {
 
-    // SharedPreferences-Dateiname
+    // SharedPreferences file name
     const val PREFS_NAME = "app_prefs"
 
-    // --- Profil ---
+    // --- Profile ---
     const val KEY_USER_NAME = "user_id"
     const val DEFAULT_USER_NAME = "User"
 
@@ -18,13 +18,13 @@ object PreferenceKeys {
     const val DEFAULT_LOCATION_RECORDING_ENABLED = false
 
     const val KEY_LOCATION_UPDATE_INTERVAL = "location_update_interval"
-    const val DEFAULT_LOCATION_UPDATE_INTERVAL = "5000" // Millisekunden
+    const val DEFAULT_LOCATION_UPDATE_INTERVAL = "5000" // milliseconds
 
     // --- Map ---
     const val KEY_MAP_DEFAULT_ZOOM = "map_default_zoom"
     const val DEFAULT_MAP_DEFAULT_ZOOM = "15.0"
 
-    // --- Darstellung ---
+    // --- Appearance ---
     const val KEY_THEME_MODE = "theme_mode"
     const val DEFAULT_THEME_MODE = "system" // system, light, dark
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">AirBuddy Madrid</string>
     <string name="csv_viewer_title">GPS Coordinates Log</string>
     <string name="third_activity_title">Third Activity</string>
     <string name="third_activity_info">This activity demonstrates Activity management with finish(). Navigating to another activity or pressing Back will close this activity.</string>
@@ -112,7 +112,7 @@
     <string name="weather_grant_permission">Grant Permission</string>
     <string name="weather_no_location">Could not determine your location.</string>
 
-    <!-- Arrays für ListPreferences -->
+    <!-- Arrays for ListPreferences -->
     <string-array name="location_interval_entries">
         <item>5 seconds</item>
         <item>10 seconds</item>

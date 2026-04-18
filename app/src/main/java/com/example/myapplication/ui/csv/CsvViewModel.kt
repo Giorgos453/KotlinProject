@@ -11,10 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-/**
- * UI-State fuer den GPS-Log-Viewer.
- * Deckt alle Zustaende ab: Laden, Daten, Leer, Fehler.
- */
 sealed class CsvUiState {
     data object Loading : CsvUiState()
     data class Success(val coordinates: List<LocationEntity>) : CsvUiState()
@@ -22,11 +18,6 @@ sealed class CsvUiState {
     data class Error(val message: String) : CsvUiState()
 }
 
-/**
- * ViewModel fuer den GPS-Log-Viewer.
- * Liest GPS-Daten aus der Room-Datenbank.
- * Flow-basiert: UI aktualisiert sich automatisch bei Datenaenderungen.
- */
 class CsvViewModel(
     private val repository: GpsCoordinateRepository
 ) : ViewModel() {
@@ -38,7 +29,6 @@ class CsvViewModel(
         loadGpsData()
     }
 
-    /** Beobachtet GPS-Daten als Flow – automatische Aktualisierung bei Aenderungen */
     private fun loadGpsData() {
         viewModelScope.launch {
             try {
@@ -56,7 +46,6 @@ class CsvViewModel(
         }
     }
 
-    /** Fuegt einen GPS-Eintrag ein (z.B. fuer Undo nach Delete) */
     fun insertCoordinate(coordinate: LocationEntity) {
         viewModelScope.launch {
             try {
@@ -68,7 +57,6 @@ class CsvViewModel(
         }
     }
 
-    /** Loescht einen einzelnen GPS-Eintrag */
     fun deleteCoordinate(coordinate: LocationEntity) {
         viewModelScope.launch {
             try {
@@ -80,7 +68,6 @@ class CsvViewModel(
         }
     }
 
-    /** Loescht alle GPS-Eintraege */
     fun deleteAllCoordinates() {
         viewModelScope.launch {
             try {

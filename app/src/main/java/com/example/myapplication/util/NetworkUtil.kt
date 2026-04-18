@@ -5,12 +5,12 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 
 /**
- * Hilfsklasse fuer Netzwerk-Konnektivitaetspruefungen.
- * Nutzt ConnectivityManager mit NetworkCapabilities (API 23+).
+ * Helper for network connectivity checks.
+ * Uses ConnectivityManager with NetworkCapabilities (API 23+).
  */
 object NetworkUtil {
 
-    /** Prueft ob eine aktive Internetverbindung besteht (WiFi, Cellular, Ethernet) */
+    /** Returns true when an active internet connection exists (WiFi, Cellular, Ethernet) */
     fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

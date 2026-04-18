@@ -3,8 +3,8 @@ package com.example.myapplication.data.network.model
 import com.google.gson.annotations.SerializedName
 
 /**
- * API-Response-Modelle fuer OpenWeatherMap /data/2.5/weather.
- * SerializedName mappt JSON-Keys auf Kotlin-Properties.
+ * API response models for OpenWeatherMap /data/2.5/weather.
+ * SerializedName maps JSON keys onto Kotlin properties.
  */
 data class WeatherResponse(
     @SerializedName("name") val cityName: String,
@@ -27,7 +27,7 @@ data class WeatherItem(
     @SerializedName("description") val description: String,
     @SerializedName("icon") val icon: String
 ) {
-    /** URL fuer das Wetter-Icon von OpenWeatherMap */
+    /** URL for the OpenWeatherMap weather icon */
     val iconUrl: String get() = "https://openweathermap.org/img/wn/${icon}@2x.png"
 }
 
@@ -38,4 +38,22 @@ data class WindData(
 data class CoordData(
     @SerializedName("lat") val lat: Double,
     @SerializedName("lon") val lon: Double
+)
+
+data class ForecastResponse(
+    @SerializedName("list") val list: List<ForecastItem>,
+    @SerializedName("city") val city: ForecastCity?
+)
+
+data class ForecastItem(
+    @SerializedName("dt") val dt: Long,
+    @SerializedName("main") val main: MainData,
+    @SerializedName("weather") val weather: List<WeatherItem>,
+    @SerializedName("wind") val wind: WindData?,
+    @SerializedName("dt_txt") val dtTxt: String
+)
+
+data class ForecastCity(
+    @SerializedName("name") val name: String,
+    @SerializedName("coord") val coord: CoordData?
 )

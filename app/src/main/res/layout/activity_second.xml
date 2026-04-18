@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true">
 
-    <!-- Toolbar mit Titel und Zurück-Pfeil -->
+    <!-- Toolbar with title and back arrow -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -17,13 +17,13 @@
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:navigationIconTint="@android:color/white" />
 
-    <!-- FrameLayout als Container für die drei Zustände: Loading, Empty, Liste -->
+    <!-- FrameLayout container for the three states: Loading, Empty, List -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <!-- Ladeanzeige (sichtbar während Datei gelesen wird) -->
+        <!-- Loading indicator (visible while the file is being read) -->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
             android:visibility="gone"
             android:contentDescription="@string/csv_loading" />
 
-        <!-- Platzhalter bei leerer/fehlender Datei -->
+        <!-- Placeholder when the file is empty or missing -->
         <TextView
             android:id="@+id/tvEmpty"
             android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
             android:padding="32dp"
             android:visibility="gone" />
 
-        <!-- Fehlermeldung -->
+        <!-- Error message -->
         <TextView
             android:id="@+id/tvError"
             android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
             android:padding="32dp"
             android:visibility="gone" />
 
-        <!-- GPS-Koordinaten als RecyclerView-Liste -->
+        <!-- GPS coordinates as a RecyclerView list -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

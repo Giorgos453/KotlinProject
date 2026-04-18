@@ -18,16 +18,14 @@ class GeocodingRepository(context: Context) {
                 val addresses = geocoder.getFromLocation(latitude, longitude, 1)
                 if (!addresses.isNullOrEmpty()) {
                     val address = addresses[0]
-                    val addressText = address.getAddressLine(0) ?: buildString {
-                        address.thoroughfare?.let { append(it) }
-                        address.locality?.let {
-                            if (isNotEmpty()) append(", ")
-                            append(it)
-                        }
-                        address.countryName?.let {
-                            if (isNotEmpty()) append(", ")
-                            append(it)
-                        }
+                    val subLocality = address.subLocality
+                    val locality = address.locality
+                    val adminArea = address.adminArea
+                    val addressText = when {
+                        !subLocality.isNullOrBlank() && !locality.isNullOrBlank() -> "$subLocality, $locality"
+                        !locality.isNullOrBlank() -> locality
+                        !adminArea.isNullOrBlank() -> adminArea
+                        else -> "Madrid"
                     }
                     AppLogger.d(TAG, "Geocoded ($latitude, $longitude) -> $addressText")
                     Result.success(addressText)

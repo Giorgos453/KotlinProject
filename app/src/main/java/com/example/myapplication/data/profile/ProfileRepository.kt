@@ -98,17 +98,39 @@ class ProfileRepository(
     suspend fun ensureProfileExists(userId: String, username: String, email: String) {
         try {
             val snapshot = usersRef.child(userId).get().await()
+            // Always make sure username + email + createdAt exist (for leaderboard display).
+            val updates = mutableMapOf<String, Any>(
+                "username" to username,
+                "email" to email
+            )
+            if (!snapshot.child("createdAt").exists()) {
+                updates["createdAt"] = System.currentTimeMillis()
+            }
+            if (!snapshot.child("xp").exists()) {
+                updates["xp"] = snapshot.child("treeState").child("currentScore").getValue(Int::class.java) ?: 50
+            }
+            usersRef.child(userId).updateChildren(updates).await()
             if (!snapshot.exists()) {
-                val profile = UserProfile(
-                    userId = userId,
-                    username = username,
-                    email = email
-                )
-                updateProfile(profile)
                 AppLogger.i(TAG, "Initial profile created for $userId")
             }
         } catch (e: Exception) {
             AppLogger.e(TAG, "Failed to ensure profile exists for $userId", e)
+        }
+    }
+
+    suspend fun updateUsername(userId: String, username: String) {
+        try {
+            usersRef.child(userId).child("username").setValue(username).await()
+        } catch (e: Exception) {
+            AppLogger.e(TAG, "Failed to update username for $userId", e)
+        }
+    }
+
+    suspend fun updateAvatarImageId(userId: String, avatarImageId: String) {
+        try {
+            usersRef.child(userId).child("avatarImageId").setValue(avatarImageId).await()
+        } catch (e: Exception) {
+            AppLogger.e(TAG, "Failed to update avatarImageId for $userId", e)
         }
     }
 

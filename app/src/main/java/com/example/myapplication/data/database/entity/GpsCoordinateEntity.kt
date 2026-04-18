@@ -6,9 +6,9 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /**
- * Room-Entity fuer GPS-Koordinaten.
- * Ersetzt die bisherige CSV-Datei als persistente Datenquelle.
- * Index auf timestamp fuer schnelle chronologische Abfragen.
+ * Room entity for GPS coordinates.
+ * Replaces the previous CSV file as persistent data source.
+ * Indexed on timestamp for fast chronological queries.
  */
 @Entity(
     tableName = "gps_coordinates",

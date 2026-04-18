@@ -24,8 +24,8 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 /**
- * SecondActivity: Zeigt GPS-Koordinaten aus der Room-Datenbank als RecyclerView-Liste an.
- * Unterstuetzt Swipe-to-Delete und Delete-All ueber die Toolbar.
+ * SecondActivity: Shows GPS coordinates from the Room database as a RecyclerView list.
+ * Supports swipe-to-delete and Delete-All via the toolbar.
  */
 class SecondActivity : AppCompatActivity() {
 
@@ -63,7 +63,7 @@ class SecondActivity : AppCompatActivity() {
             AppLogger.d(TAG, "Back navigation pressed")
             finish()
         }
-        // "Delete All" Menuepunkt in der Toolbar
+        // "Delete All" menu item in the toolbar
         toolbar.inflateMenu(R.menu.menu_gps_log)
         toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
@@ -92,7 +92,7 @@ class SecondActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
     }
 
-    /** Swipe-to-Delete: Wischen nach links oder rechts loescht den Eintrag */
+    /** Swipe-to-delete: swiping left or right removes the entry */
     private fun setupSwipeToDelete() {
         val swipeHandler = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(rv: RecyclerView, vh: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder) = false
@@ -102,7 +102,7 @@ class SecondActivity : AppCompatActivity() {
                 val deletedItem = adapter.currentList[position]
                 viewModel.deleteCoordinate(deletedItem)
 
-                // Snackbar mit Undo-Option
+                // Snackbar with undo option
                 Snackbar.make(recyclerView, R.string.entry_deleted, Snackbar.LENGTH_LONG)
                     .setAction(R.string.undo) {
                         viewModel.insertCoordinate(deletedItem)
@@ -113,7 +113,7 @@ class SecondActivity : AppCompatActivity() {
         ItemTouchHelper(swipeHandler).attachToRecyclerView(recyclerView)
     }
 
-    /** Bestaetigungsdialog vor dem Loeschen aller Eintraege */
+    /** Confirmation dialog before deleting all entries */
     private fun showDeleteAllConfirmation() {
         val currentState = viewModel.uiState.value
         if (currentState !is CsvUiState.Success) return
@@ -161,7 +161,7 @@ class SecondActivity : AppCompatActivity() {
 
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.title = getString(R.string.csv_viewer_title_count, state.coordinates.size)
-        // Delete-All nur anzeigen wenn Daten vorhanden
+        // only show Delete-All when data is present
         toolbar.menu.findItem(R.id.action_delete_all)?.isVisible = true
     }
 
@@ -170,7 +170,7 @@ class SecondActivity : AppCompatActivity() {
         recyclerView.visibility = View.GONE
         tvEmpty.visibility = View.VISIBLE
         tvError.visibility = View.GONE
-        // Delete-All ausblenden bei leerer Liste
+        // hide Delete-All when list is empty
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.menu.findItem(R.id.action_delete_all)?.isVisible = false
     }

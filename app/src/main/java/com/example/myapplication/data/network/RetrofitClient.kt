@@ -7,10 +7,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 /**
- * Singleton Retrofit-Client fuer die OpenWeatherMap API.
- * - Timeouts explizit auf 30s gesetzt
- * - Logging-Interceptor nur fuer Debug-Builds (HEADERS, keine Body-Daten)
- * - Nur HTTPS (Base-URL ist https://)
+ * Singleton Retrofit client for the OpenWeatherMap API.
+ * - Explicit 30s timeouts
+ * - Logging interceptor only for debug builds (HEADERS, no body data)
+ * - HTTPS only (base URL is https://)
  */
 object RetrofitClient {
 
@@ -18,7 +18,7 @@ object RetrofitClient {
     private const val TIMEOUT_SECONDS = 30L
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
-        // HEADERS statt BODY – API-Key im Query-String wird bei BASIC/HEADERS nicht geloggt
+        // HEADERS instead of BODY — API key in query string is not logged at BASIC/HEADERS
         level = HttpLoggingInterceptor.Level.BASIC
     }
 

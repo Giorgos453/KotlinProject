@@ -14,7 +14,9 @@ data class QuizUiState(
     val isSessionComplete: Boolean = false,
     val answeredQuestions: List<AnsweredQuestion> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val treePointsAwarded: Int? = null,
+    val treeScoreMessage: String? = null
 )
 
 /**

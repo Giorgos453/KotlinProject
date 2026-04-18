@@ -21,8 +21,8 @@ import java.util.Date
 import java.util.Locale
 
 /**
- * ThirdActivity: Detail-Screen fuer einen einzelnen GPS-Eintrag.
- * Zeigt Details an und bietet Update + Delete mit Bestaetigungsdialogen.
+ * ThirdActivity: Detail screen for a single GPS entry.
+ * Shows details and offers Update + Delete with confirmation dialogs.
  */
 class ThirdActivity : AppCompatActivity() {
 
@@ -80,7 +80,7 @@ class ThirdActivity : AppCompatActivity() {
             "%.1f m".format(coordinate.altitude)
     }
 
-    /** Update-Button: Zeigt Bestaetigungsdialog mit den aktuellen Werten vor dem Speichern */
+    /** Update button: shows a confirmation dialog with current values before saving */
     private fun setupUpdateButton(coordinate: LocationEntity) {
         val btnUpdate = findViewById<MaterialButton>(R.id.btnUpdate)
         btnUpdate.visibility = View.VISIBLE
@@ -104,7 +104,7 @@ class ThirdActivity : AppCompatActivity() {
         }
     }
 
-    /** Delete-Button: Zeigt Bestaetigungsdialog mit Koordinaten-Details */
+    /** Delete button: shows a confirmation dialog with coordinate details */
     private fun setupDeleteButton(coordinate: LocationEntity) {
         val btnDelete = findViewById<MaterialButton>(R.id.btnDelete)
         btnDelete.visibility = View.VISIBLE
@@ -128,7 +128,7 @@ class ThirdActivity : AppCompatActivity() {
         }
     }
 
-    /** Aktualisiert den Timestamp des Eintrags und refresht die Anzeige */
+    /** Updates the entry's timestamp and refreshes the display */
     private fun updateAndRefresh(coordinate: LocationEntity) {
         lifecycleScope.launch {
             try {

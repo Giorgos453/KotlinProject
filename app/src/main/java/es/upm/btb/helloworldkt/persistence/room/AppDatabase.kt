@@ -16,19 +16,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
- * Zentrale Room-Datenbank der App – Singleton-Pattern.
- * Datenbankname: "coordinates"
+ * Central Room database for the app — singleton pattern.
+ * Database name: "coordinates"
  *
  * TROUBLESHOOTING:
- * Bei Schema-Aenderungen (z.B. neue Spalte, Entity hinzugefuegt/entfernt):
- * - Entweder: DB-Version erhoehen (version = 3, 4, ...) + Migration schreiben
- * - Oder: App vom Geraet deinstallieren (loescht die DB komplett)
- * - Sonst: IllegalStateException "Room cannot verify the data integrity"
+ * For schema changes (e.g. new column, entity added/removed):
+ * - Either: bump DB version (version = 3, 4, ...) and write a migration
+ * - Or: uninstall the app from the device (wipes the DB completely)
+ * - Otherwise: IllegalStateException "Room cannot verify the data integrity"
  *
  * DEBUGGING:
- * - DB im Android Studio einsehen: View -> Tool Windows -> App Inspection -> Database Inspector
- * - Alternativ im Device Explorer: /data/data/es.upm.btb.helloworldkt/databases/
- * - Live Updates im Database Inspector aktivieren fuer Echtzeit-Ansicht
+ * - Inspect DB in Android Studio: View -> Tool Windows -> App Inspection -> Database Inspector
+ * - Alternatively in Device Explorer: /data/data/es.upm.btb.helloworldkt/databases/
+ * - Enable live updates in Database Inspector for real-time view
  */
 @Database(
     entities = [
@@ -52,8 +52,8 @@ abstract class AppDatabase : RoomDatabase() {
         private var INSTANCE: AppDatabase? = null
 
         /**
-         * Singleton-Zugriff – erstellt die Datenbank beim ersten Aufruf.
-         * Beim ersten Start werden die Standard-Campus-Marker eingefuegt (Callback).
+         * Singleton accessor — creates the database on first call.
+         * On first launch the default campus markers are seeded via callback.
          */
         fun getInstance(context: Context): AppDatabase =
             INSTANCE ?: synchronized(this) {
@@ -71,8 +71,8 @@ abstract class AppDatabase : RoomDatabase() {
                 .build()
 
         /**
-         * Callback zum Befuellen der Datenbank mit Initialdaten.
-         * Wird nur bei onCreate aufgerufen (= erste Installation).
+         * Callback that seeds the database with initial data.
+         * Only runs on onCreate (first install).
          */
         private class SeedDatabaseCallback : Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
@@ -85,7 +85,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        /** Standard-Campus-Marker (vorher statisch in CampusTourData) */
+        /** Default campus markers (previously static in CampusTourData) */
         private fun defaultCampusMarkers(): List<CampusMarkerEntity> = listOf(
             CampusMarkerEntity(
                 id = 1,

@@ -20,13 +20,13 @@ data class LocationUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val permissionGranted: Boolean = false,
-    // Switch-Status: Aufzeichnung in Datenbank aktiviert/deaktiviert
+    // switch state: recording to database enabled/disabled
     val isRecordingEnabled: Boolean = false
 )
 
 /**
- * ViewModel fuer Location-Screen.
- * Schreibt GPS-Daten in die Room-Datenbank.
+ * ViewModel for the Location screen.
+ * Writes GPS data into the Room database.
  */
 class LocationViewModel(
     private val locationRepository: LocationRepository,
@@ -36,7 +36,7 @@ class LocationViewModel(
     private val _uiState = MutableStateFlow(LocationUiState())
     val uiState: StateFlow<LocationUiState> = _uiState.asStateFlow()
 
-    // Job fuer kontinuierliche Location-Updates
+    // job for continuous location updates
     private var locationUpdatesJob: Job? = null
 
     fun onPermissionResult(granted: Boolean) {
@@ -99,7 +99,7 @@ class LocationViewModel(
                     altitude = location.altitude,
                     isLoading = false
                 )
-                // GPS-Daten in Room-Datenbank speichern (Insert)
+                // persist GPS data into Room database
                 saveLocationToDatabase(location.latitude, location.longitude, location.altitude)
             }
         }
@@ -112,8 +112,8 @@ class LocationViewModel(
     }
 
     /**
-     * Speichert einen GPS-Datensatz in der Room-Datenbank.
-     * Timestamp als Long (System.currentTimeMillis()).
+     * Persists a single GPS record into the Room database.
+     * Timestamp stored as Long (System.currentTimeMillis()).
      */
     private fun saveLocationToDatabase(latitude: Double, longitude: Double, altitude: Double) {
         viewModelScope.launch {

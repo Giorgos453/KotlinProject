@@ -13,9 +13,9 @@ import com.example.myapplication.data.security.ApiKeyManager
 import com.example.myapplication.util.AppLogger
 
 /**
- * Settings-Fragment basierend auf PreferenceFragmentCompat.
- * Liest/schreibt alle Werte ueber den PreferencesManager (Repository-Schicht).
- * Profil + API-Key-Verwaltung wird an das ApiKeyFragment delegiert (kombiniert).
+ * Settings fragment based on PreferenceFragmentCompat.
+ * Reads/writes all values through PreferencesManager (repository layer).
+ * Profile + API key management is delegated to the combined ApiKeyFragment.
  */
 class SettingsFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
@@ -46,6 +46,9 @@ class SettingsFragment : PreferenceFragmentCompat(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
+            PreferenceKeys.KEY_USER_NAME -> {
+                AppLogger.i(TAG, "Username changed to: ${preferencesManager.userName}")
+            }
             PreferenceKeys.KEY_THEME_MODE -> {
                 AppLogger.i(TAG, "Theme changed to: ${preferencesManager.themeMode}")
                 requireActivity().recreate()
@@ -70,7 +73,7 @@ class SettingsFragment : PreferenceFragmentCompat(),
         }
     }
 
-    /** Klick auf Profil & API oeffnet das kombinierte ApiKeyFragment */
+    /** Clicking "Profile & API" opens the combined ApiKeyFragment */
     private fun setupProfileApiPreference() {
         val pref = findPreference<Preference>(KEY_MANAGE_PROFILE_API)
         pref?.setOnPreferenceClickListener {
@@ -84,7 +87,7 @@ class SettingsFragment : PreferenceFragmentCompat(),
         updateProfileApiSummary()
     }
 
-    /** Aktualisiert die Summary basierend auf gespeichertem User + API-Key-Status */
+    /** Updates the summary based on stored user and API key status */
     private fun updateProfileApiSummary() {
         val pref = findPreference<Preference>(KEY_MANAGE_PROFILE_API)
         val hasKey = ApiKeyManager.getInstance(requireContext()).hasApiKey()

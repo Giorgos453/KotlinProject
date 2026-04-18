@@ -9,9 +9,9 @@ import com.example.myapplication.data.database.entity.GpsCoordinateEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
- * DAO fuer GPS-Koordinaten – vollstaendige CRUD-Operationen.
- * Lesende Queries als Flow fuer automatische UI-Aktualisierung.
- * Schreibende Operationen als suspend fun (niemals auf Main Thread).
+ * DAO for GPS coordinates — full CRUD operations.
+ * Read queries return Flow for automatic UI updates.
+ * Write operations are suspend functions (never on the main thread).
  */
 @Dao
 interface GpsCoordinateDao {
@@ -22,7 +22,7 @@ interface GpsCoordinateDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(coordinates: List<GpsCoordinateEntity>)
 
-    /** Alle Koordinaten absteigend nach Erstellungszeitpunkt – neueste zuerst */
+    /** All coordinates ordered by creation time descending — newest first */
     @Query("SELECT * FROM gps_coordinates ORDER BY created_at DESC")
     fun getAll(): Flow<List<GpsCoordinateEntity>>
 

@@ -5,9 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * Room-Entity fuer GPS-Koordinaten.
- * Tabelle: "coordinates"
- * Spalten: id (INTEGER PK), latitude (REAL), longitude (REAL), altitude (REAL), timestamp (INTEGER)
+ * Room entity for GPS coordinates.
+ * Table: "coordinates"
+ * Columns: id (INTEGER PK), latitude (REAL), longitude (REAL), altitude (REAL), timestamp (INTEGER)
  */
 @Entity(tableName = "coordinates")
 data class LocationEntity(

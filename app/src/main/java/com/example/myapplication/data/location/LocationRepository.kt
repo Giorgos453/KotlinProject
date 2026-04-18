@@ -15,6 +15,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
+// NOTE FOR DEVELOPERS: The Android Emulator defaults to Googleplex (USA) as simulated location.
+// To test with Madrid: Extended Controls (three dots on emulator) -> Location -> set coordinates
+// to 40.4165, -3.7026 or send a route to simulate movement.
+
 class LocationRepository(
     private val fusedLocationClient: FusedLocationProviderClient
 ) {

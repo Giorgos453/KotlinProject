@@ -14,8 +14,8 @@ import java.util.Date
 import java.util.Locale
 
 /**
- * RecyclerView-Adapter fuer GPS-Koordinaten aus der Room-Datenbank.
- * Nutzt ListAdapter + DiffUtil fuer effizientes Rendering bei Datenaenderungen.
+ * RecyclerView adapter for GPS coordinates from the Room database.
+ * Uses ListAdapter + DiffUtil for efficient re-rendering on data changes.
  */
 class GpsCoordinateAdapter(
     private val onItemClick: (LocationEntity) -> Unit
@@ -23,7 +23,7 @@ class GpsCoordinateAdapter(
     LocationDiffCallback()
 ) {
 
-    // Debounce: verhindert Doppelklicks
+    // debounce: prevents double-click
     private var lastClickTime = 0L
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -83,7 +83,7 @@ class GpsCoordinateAdapter(
 }
 
 /**
- * DiffUtil-Callback – vergleicht Eintraege anhand der Room-ID (eindeutig).
+ * DiffUtil callback — compares entries by Room ID (unique).
  */
 private class LocationDiffCallback : DiffUtil.ItemCallback<LocationEntity>() {
     override fun areItemsTheSame(oldItem: LocationEntity, newItem: LocationEntity): Boolean {

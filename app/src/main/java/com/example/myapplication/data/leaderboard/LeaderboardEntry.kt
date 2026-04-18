@@ -1,13 +1,16 @@
 package com.example.myapplication.data.leaderboard
 
+import com.example.myapplication.data.airbuddy.model.AvatarStage
+
 /**
- * Data model for a leaderboard entry stored in Firebase RTDB.
- * Default values required for Firebase deserialization.
+ * Live leaderboard entry derived from `users/{uid}` in Firebase RTDB.
  */
 data class LeaderboardEntry(
     val userId: String = "",
-    val nickname: String = "",
-    val score: Int = 0,
-    val stage: Int = 0,
+    val username: String = "",
+    val xp: Int = 0,
+    val avatarStage: AvatarStage = AvatarStage.SPROUT,
+    val avatarImageId: String = "",
+    val isCurrentUser: Boolean = false,
     val rank: Int = 0
 )

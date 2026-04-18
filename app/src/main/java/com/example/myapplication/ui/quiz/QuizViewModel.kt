@@ -3,12 +3,12 @@ package com.example.myapplication.ui.quiz
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.data.airbuddy.TreeScoreManager
 import com.example.myapplication.data.leaderboard.LeaderboardRepository
 import com.example.myapplication.data.profile.ProfileRepository
 import com.example.myapplication.data.quiz.QuizQuestion
 import com.example.myapplication.data.quiz.QuizRepository
 import com.example.myapplication.util.AppLogger
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,6 +19,7 @@ class QuizViewModel(
     private val repository: QuizRepository,
     private val leaderboardRepository: LeaderboardRepository?,
     private val profileRepository: ProfileRepository?,
+    private val treeScoreManager: TreeScoreManager?,
     private val userId: String?,
     private val userNickname: String?
 ) : ViewModel() {
@@ -74,11 +75,10 @@ class QuizViewModel(
                 answeredQuestions = it.answeredQuestions + answered
             )
         }
+    }
 
-        viewModelScope.launch {
-            delay(if (isCorrect) CORRECT_DELAY_MS else WRONG_DELAY_MS)
-            advanceToNext()
-        }
+    fun nextQuestion() {
+        advanceToNext()
     }
 
     private fun advanceToNext() {
@@ -102,19 +102,32 @@ class QuizViewModel(
 
     private fun submitScoreToLeaderboard(sessionScore: Int) {
         if (userId == null || userNickname == null) return
+        val correctCount = _uiState.value.answeredQuestions.count { it.wasCorrect }
         viewModelScope.launch {
+            // Leaderboard xp is mirrored by TreeStateRepository.saveTreeState (cumulative
+            // tree score). Writing sessionScore here would clobber the cumulative value.
             try {
-                // Update leaderboard
-                val stage = sessionScore / POINTS_PER_CORRECT
-                leaderboardRepository?.updateUserScore(userId, userNickname, sessionScore, stage)
-            } catch (e: Exception) {
-                AppLogger.e(TAG, "Failed to submit score to leaderboard", e)
-            }
-            try {
-                // Update profile (accumulated score + quiz count)
                 profileRepository?.addScoreAndIncrementQuiz(userId, sessionScore)
             } catch (e: Exception) {
                 AppLogger.e(TAG, "Failed to update profile after quiz", e)
+            }
+            try {
+                val result = treeScoreManager?.onQuizCompleted(userId, correctCount, QUESTIONS_PER_SESSION)
+                if (result != null) {
+                    if (result.alreadyPlayedToday) {
+                        _uiState.update { it.copy(
+                            treePointsAwarded = 0,
+                            treeScoreMessage = "You already played a quiz today! Come back tomorrow for more tree points."
+                        ) }
+                    } else {
+                        _uiState.update { it.copy(
+                            treePointsAwarded = result.pointsAwarded,
+                            treeScoreMessage = "+${result.pointsAwarded} tree points earned!"
+                        ) }
+                    }
+                }
+            } catch (e: Exception) {
+                AppLogger.e(TAG, "Failed to update tree score after quiz", e)
             }
         }
     }
@@ -128,13 +141,14 @@ class QuizViewModel(
         private val repository: QuizRepository,
         private val leaderboardRepository: LeaderboardRepository? = null,
         private val profileRepository: ProfileRepository? = null,
+        private val treeScoreManager: TreeScoreManager? = null,
         private val userId: String? = null,
         private val userNickname: String? = null
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(QuizViewModel::class.java)) {
-                return QuizViewModel(repository, leaderboardRepository, profileRepository, userId, userNickname) as T
+                return QuizViewModel(repository, leaderboardRepository, profileRepository, treeScoreManager, userId, userNickname) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
@@ -144,7 +158,5 @@ class QuizViewModel(
         private const val TAG = "QuizViewModel"
         const val QUESTIONS_PER_SESSION = 3
         const val POINTS_PER_CORRECT = 10
-        private const val CORRECT_DELAY_MS = 1500L
-        private const val WRONG_DELAY_MS = 2000L
     }
 }

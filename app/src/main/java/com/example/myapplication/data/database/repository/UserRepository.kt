@@ -5,11 +5,11 @@ import com.example.myapplication.data.database.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Repository fuer Benutzer – kapselt alle DAO-Zugriffe.
+ * Repository for users — wraps all DAO access.
  */
 class UserRepository(private val dao: UserDao) {
 
-    /** Alle Benutzer als Flow – UI aktualisiert sich automatisch */
+    /** All users as a Flow — UI updates automatically */
     val allUsers: Flow<List<UserEntity>> = dao.getAll()
 
     suspend fun insert(user: UserEntity) = dao.insert(user)

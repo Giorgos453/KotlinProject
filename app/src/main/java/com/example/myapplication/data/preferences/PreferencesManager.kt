@@ -16,17 +16,10 @@ import com.example.myapplication.data.preferences.PreferenceKeys.KEY_THEME_MODE
 import com.example.myapplication.data.preferences.PreferenceKeys.KEY_USER_NAME
 import com.example.myapplication.data.preferences.PreferenceKeys.PREFS_NAME
 
-/**
- * Repository-Schicht für alle SharedPreferences-Zugriffe.
- * Kein direkter getSharedPreferences()-Aufruf in Activities/Fragments –
- * nur über diese Klasse.
- */
 class PreferencesManager(context: Context) {
 
     private val prefs: SharedPreferences =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-
-    // --- Profil ---
 
     var userName: String
         get() = prefs.getString(KEY_USER_NAME, DEFAULT_USER_NAME) ?: DEFAULT_USER_NAME
@@ -38,7 +31,6 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(KEY_LOCATION_RECORDING_ENABLED, DEFAULT_LOCATION_RECORDING_ENABLED)
         set(value) = prefs.edit().putBoolean(KEY_LOCATION_RECORDING_ENABLED, value).apply()
 
-    /** Update-Intervall in Millisekunden (als Long) */
     var locationUpdateInterval: Long
         get() = (prefs.getString(KEY_LOCATION_UPDATE_INTERVAL, DEFAULT_LOCATION_UPDATE_INTERVAL)
             ?: DEFAULT_LOCATION_UPDATE_INTERVAL).toLong()
@@ -51,7 +43,7 @@ class PreferencesManager(context: Context) {
             ?: DEFAULT_MAP_DEFAULT_ZOOM).toDouble()
         set(value) = prefs.edit().putString(KEY_MAP_DEFAULT_ZOOM, value.toString()).apply()
 
-    // --- Darstellung ---
+    // --- Appearance ---
 
     var themeMode: String
         get() = prefs.getString(KEY_THEME_MODE, DEFAULT_THEME_MODE) ?: DEFAULT_THEME_MODE
@@ -61,16 +53,19 @@ class PreferencesManager(context: Context) {
         get() = prefs.getBoolean(KEY_DYNAMIC_COLORS, DEFAULT_DYNAMIC_COLORS)
         set(value) = prefs.edit().putBoolean(KEY_DYNAMIC_COLORS, value).apply()
 
-    /** Prüft, ob der Benutzer bereits einen Namen gesetzt hat */
+    var selectedAvatarId: Int
+        get() = prefs.getInt("selected_avatar_id", 0)
+        set(value) = prefs.edit().putInt("selected_avatar_id", value).apply()
+
+    var customAvatarPath: String?
+        get() = prefs.getString("custom_avatar_path", null)
+        set(value) = prefs.edit().putString("custom_avatar_path", value).apply()
+
     fun hasUserName(): Boolean {
         val name = prefs.getString(KEY_USER_NAME, null)
         return !name.isNullOrBlank()
     }
 
-    /**
-     * Registriert einen Listener für Preference-Änderungen.
-     * Caller muss den Listener selbst unregistrieren (z. B. in onDestroy).
-     */
     fun registerChangeListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) {
         prefs.registerOnSharedPreferenceChangeListener(listener)
     }

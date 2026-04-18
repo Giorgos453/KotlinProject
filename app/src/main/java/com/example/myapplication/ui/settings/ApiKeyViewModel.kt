@@ -9,22 +9,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-/**
- * UI-State fuer die API-Key-Verwaltung.
- */
 data class ApiKeyUiState(
-    /** Ob ein API-Key gespeichert ist */
     val hasKey: Boolean = false,
-    /** Fehlermeldung bei Validierung (null = kein Fehler) */
     val validationError: String? = null,
-    /** Erfolgsmeldung nach Speichern/Loeschen (null = keine) */
     val successMessage: String? = null
 )
 
-/**
- * ViewModel fuer die API-Key-Einstellungen.
- * Haelt den ApiKeyManager und exponiert den Status als StateFlow.
- */
 class ApiKeyViewModel(
     private val apiKeyManager: ApiKeyManager
 ) : ViewModel() {
@@ -32,10 +22,6 @@ class ApiKeyViewModel(
     private val _uiState = MutableStateFlow(ApiKeyUiState(hasKey = apiKeyManager.hasApiKey()))
     val uiState: StateFlow<ApiKeyUiState> = _uiState.asStateFlow()
 
-    /**
-     * Validiert und speichert den API-Key.
-     * Gibt true zurueck bei Erfolg, false bei Validierungsfehler.
-     */
     fun saveApiKey(key: String): Boolean {
         val result = ApiKeyManager.validateApiKey(key)
         return when (result) {
@@ -58,7 +44,6 @@ class ApiKeyViewModel(
         }
     }
 
-    /** Loescht den gespeicherten API-Key */
     fun clearApiKey() {
         apiKeyManager.clearApiKey()
         _uiState.value = ApiKeyUiState(
@@ -68,12 +53,10 @@ class ApiKeyViewModel(
         )
     }
 
-    /** Setzt die Erfolgsmeldung zurueck (nachdem Snackbar angezeigt wurde) */
     fun clearSuccessMessage() {
         _uiState.value = _uiState.value.copy(successMessage = null)
     }
 
-    /** Setzt den Validierungsfehler zurueck */
     fun clearValidationError() {
         _uiState.value = _uiState.value.copy(validationError = null)
     }

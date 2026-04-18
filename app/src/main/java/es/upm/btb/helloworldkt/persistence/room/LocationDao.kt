@@ -9,9 +9,9 @@ import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 /**
- * DAO fuer GPS-Koordinaten – vollstaendige CRUD-Operationen.
- * Lesende Queries als Flow fuer automatische UI-Aktualisierung.
- * Schreibende Operationen als suspend fun (niemals auf Main Thread).
+ * DAO for GPS coordinates — full CRUD operations.
+ * Read queries return Flow for automatic UI updates.
+ * Write operations are suspend functions (never on the main thread).
  */
 @Dao
 interface LocationDao {
@@ -25,7 +25,7 @@ interface LocationDao {
     @Update
     suspend fun update(location: LocationEntity)
 
-    /** Alle Koordinaten absteigend nach Timestamp – neueste zuerst */
+    /** All coordinates ordered by timestamp descending — newest first */
     @Query("SELECT * FROM coordinates ORDER BY timestamp DESC")
     fun getAll(): Flow<List<LocationEntity>>
 

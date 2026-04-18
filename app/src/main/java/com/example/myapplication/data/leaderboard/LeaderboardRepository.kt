@@ -1,5 +1,6 @@
 package com.example.myapplication.data.leaderboard
 
+import com.example.myapplication.data.airbuddy.scoreToAvatarStage
 import com.example.myapplication.util.AppLogger
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -11,25 +12,26 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 /**
- * Repository for leaderboard data backed by Firebase Realtime Database.
+ * Live leaderboard backed by Firebase RTDB at `users/{uid}`.
+ * Uses `orderByChild("xp").limitToLast(N)` and reverses for descending order.
  */
 class LeaderboardRepository(
     private val database: FirebaseDatabase
 ) {
-    private val leaderboardRef = database.reference.child("leaderboard")
+    private val usersRef = database.reference.child("users")
 
-    /**
-     * Observes the top [limit] leaderboard entries in real-time, sorted by score descending.
-     */
-    fun getTopLeaderboard(limit: Int = 20): Flow<Result<List<LeaderboardEntry>>> = callbackFlow {
-        val query = leaderboardRef.orderByChild("score").limitToLast(limit)
+    fun getTopLeaderboard(
+        limit: Int = 20,
+        currentUserId: String? = null
+    ): Flow<Result<List<LeaderboardEntry>>> = callbackFlow {
+        val query = usersRef.orderByChild("xp").limitToLast(limit)
 
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val entries = snapshot.children.mapNotNull { child ->
-                    child.getValue(LeaderboardEntry::class.java)
-                        ?.copy(userId = child.key ?: "")
-                }.reversed() // Firebase returns ascending; we need descending
+                    parseEntry(child, currentUserId)
+                }
+                    .sortedByDescending { it.xp }
                     .mapIndexed { index, entry -> entry.copy(rank = index + 1) }
 
                 trySend(Result.success(entries))
@@ -45,16 +47,23 @@ class LeaderboardRepository(
         awaitClose { query.removeEventListener(listener) }
     }
 
-    /**
-     * Returns the rank of a specific user by counting how many users have a higher score.
-     */
+    suspend fun getCurrentUserEntry(userId: String): LeaderboardEntry? {
+        return try {
+            val snapshot = usersRef.child(userId).get().await()
+            parseEntry(snapshot, userId)?.copy(isCurrentUser = true)
+        } catch (e: Exception) {
+            AppLogger.e(TAG, "Failed to load current user entry", e)
+            null
+        }
+    }
+
     fun getUserRank(userId: String): Flow<Result<Int>> = callbackFlow {
         val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val userScore = snapshot.child(userId).getValue(LeaderboardEntry::class.java)?.score ?: 0
+                val userXp = snapshot.child(userId).child("xp").getValue(Int::class.java) ?: 0
                 val rank = snapshot.children.count { child ->
-                    val entry = child.getValue(LeaderboardEntry::class.java)
-                    entry != null && entry.score > userScore
+                    val xp = child.child("xp").getValue(Int::class.java) ?: 0
+                    xp > userXp
                 } + 1
                 trySend(Result.success(rank))
             }
@@ -64,25 +73,47 @@ class LeaderboardRepository(
             }
         }
 
-        leaderboardRef.addValueEventListener(listener)
-        awaitClose { leaderboardRef.removeEventListener(listener) }
+        usersRef.addValueEventListener(listener)
+        awaitClose { usersRef.removeEventListener(listener) }
+    }
+
+    private fun parseEntry(snapshot: DataSnapshot, currentUserId: String?): LeaderboardEntry? {
+        val uid = snapshot.key ?: return null
+        val xp = snapshot.child("xp").getValue(Int::class.java)
+            ?: snapshot.child("treeState").child("currentScore").getValue(Int::class.java)
+            ?: return null
+        val rawUsername = snapshot.child("username").getValue(String::class.java)
+        val email = snapshot.child("email").getValue(String::class.java)
+        val username = when {
+            !rawUsername.isNullOrBlank() -> rawUsername
+            !email.isNullOrBlank() -> email.substringBefore("@")
+            else -> "Player"
+        }
+        val avatarImageId = snapshot.child("avatarImageId").getValue(String::class.java) ?: ""
+        return LeaderboardEntry(
+            userId = uid,
+            username = username,
+            xp = xp,
+            avatarStage = scoreToAvatarStage(xp),
+            avatarImageId = avatarImageId,
+            isCurrentUser = uid == currentUserId
+        )
     }
 
     /**
-     * Updates or creates a user's leaderboard entry in Firebase.
+     * Legacy helper kept so existing callers (Quiz flow) compile.
+     * The leaderboard now reads from the `users/{uid}` mirror written by
+     * TreeStateRepository, so explicit writes are no longer required.
      */
     suspend fun updateUserScore(userId: String, nickname: String, newScore: Int, stage: Int) {
         try {
-            val entry = mapOf(
-                "nickname" to nickname,
-                "score" to newScore,
-                "stage" to stage
+            val updates = mapOf(
+                "username" to nickname,
+                "xp" to newScore
             )
-            leaderboardRef.child(userId).updateChildren(entry).await()
-            AppLogger.i(TAG, "Leaderboard updated for $userId: score=$newScore, stage=$stage")
+            usersRef.child(userId).updateChildren(updates).await()
         } catch (e: Exception) {
-            AppLogger.e(TAG, "Failed to update leaderboard for $userId", e)
-            throw e
+            AppLogger.e(TAG, "Failed to update user score for $userId", e)
         }
     }
 

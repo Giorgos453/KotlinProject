@@ -13,6 +13,8 @@ import com.example.myapplication.data.database.entity.CampusMarkerEntity
 import com.example.myapplication.data.database.entity.GpsCoordinateEntity
 import com.example.myapplication.data.database.entity.UserEntity
 import com.example.myapplication.data.database.entity.WeatherCacheEntity
+import com.example.myapplication.data.airbuddy.model.TreeState
+import com.example.myapplication.data.database.dao.TreeStateDao
 import com.example.myapplication.data.quiz.QuizQuestion
 import com.example.myapplication.data.quiz.QuizQuestionDao
 import kotlinx.coroutines.CoroutineScope
@@ -20,9 +22,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
- * Zentrale Room-Datenbank der App – Singleton-Pattern.
- * Enthaelt alle Tabellen (Entities) und stellt DAOs bereit.
- * exportSchema = true fuer Versionskontrolle der Schema-Dateien.
+ * Central Room database for the app — singleton pattern.
+ * Contains all tables (entities) and exposes DAOs.
+ * exportSchema = true for schema version control.
  */
 @Database(
     entities = [
@@ -30,9 +32,10 @@ import kotlinx.coroutines.launch
         CampusMarkerEntity::class,
         UserEntity::class,
         WeatherCacheEntity::class,
-        QuizQuestion::class
+        QuizQuestion::class,
+        TreeState::class
     ],
-    version = 3,
+    version = 5,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -42,14 +45,15 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun weatherCacheDao(): WeatherCacheDao
     abstract fun quizQuestionDao(): QuizQuestionDao
+    abstract fun treeStateDao(): TreeStateDao
 
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
         /**
-         * Singleton-Zugriff – erstellt die Datenbank beim ersten Aufruf.
-         * Beim ersten Start werden die Standard-Campus-Marker eingefuegt (Callback).
+         * Singleton accessor — creates the database on first call.
+         * On first launch the default campus markers are seeded via callback.
          */
         fun getInstance(context: Context): AppDatabase =
             INSTANCE ?: synchronized(this) {
@@ -67,13 +71,13 @@ abstract class AppDatabase : RoomDatabase() {
                 .build()
 
         /**
-         * Callback zum Befuellen der Datenbank mit Initialdaten.
-         * Wird nur bei onCreate aufgerufen (= erste Installation).
+         * Callback that seeds the database with initial data.
+         * Only runs on onCreate (first install).
          */
         private class SeedDatabaseCallback : Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-                // Campus-Marker als Initialdaten einfuegen
+                // seed campus markers as initial data
                 INSTANCE?.let { database ->
                     CoroutineScope(Dispatchers.IO).launch {
                         database.campusMarkerDao().insertAll(defaultCampusMarkers())
@@ -82,7 +86,7 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        /** Standard-Campus-Marker (vorher statisch in CampusTourData) */
+        /** Default campus markers (previously static in CampusTourData) */
         private fun defaultCampusMarkers(): List<CampusMarkerEntity> = listOf(
             CampusMarkerEntity(
                 id = 1,

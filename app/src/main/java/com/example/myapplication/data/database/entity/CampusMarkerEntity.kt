@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * Room-Entity fuer Campus-Tour-Marker.
- * Ersetzt die bisherige statische CampusTourData-Liste.
+ * Room entity for campus tour markers.
+ * Replaces the previous static CampusTourData list.
  */
 @Entity(tableName = "campus_markers")
 data class CampusMarkerEntity(
