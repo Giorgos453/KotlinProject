@@ -165,6 +165,9 @@ class MainActivity : ComponentActivity() {
             val email = authRepository.currentUser?.email ?: ""
             CoroutineScope(Dispatchers.IO).launch {
                 profileRepository.ensureProfileExists(currentUserId, currentNickname, email)
+                // Repair the leaderboard mirror in case a previous partial write
+                // left users/{uid}/xp out of sync with treeState/currentScore.
+                treeStateRepository.syncLeaderboardMirror(currentUserId)
             }
         }
 
