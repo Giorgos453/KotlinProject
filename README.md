@@ -273,7 +273,7 @@ In-app guide explaining the Climate Cube framework and the game's mechanics.
 
 ## Demo Video
 
-[Watch the 60-second demo video here](LINK_TO_BE_ADDED)
+[Watch the 60-second demo video here](https://upm365.sharepoint.com/sites/KotlinProject/SitePages/Tracking.aspxLINK_TO_BE_ADDED)
 
 *60-second walkthrough showcasing the core features of AirBuddy Madrid.*
 
